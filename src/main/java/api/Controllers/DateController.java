@@ -25,6 +25,14 @@ public class DateController {
 
     @GetMapping(path = "/getall")
     public @ResponseBody Iterable<Date> getAllDates(){return dateRepository.findAll();}
+
+    @GetMapping(path = "/create")
+    public @ResponseBody String createDate(){
+        String returnString = "success";
+        Date currentDate = new Date();
+        dateRepository.save(currentDate);
+        return returnString;
+    }
 }
 
 /*
