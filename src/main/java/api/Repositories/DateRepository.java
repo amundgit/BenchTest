@@ -9,4 +9,6 @@ import api.Models.*;
 import java.time.LocalDate;
 
 public interface DateRepository extends CrudRepository<Date, LocalDate>{
+    @Query("SELECT d FROM Date d WHERE date = :date")
+    Date getByLocalDate(@Param("date") LocalDate date);
 }

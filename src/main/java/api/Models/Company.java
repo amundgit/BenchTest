@@ -30,6 +30,16 @@ public class Company {
         this.company = company;
     }
 
+    public Company(String company, Date date, int tempPositions, int permanentPositions, int relevantPositions, int relevantTempPositions, int relevantPermanentPositions){
+        this.company = company;
+        this.date = date;
+        this.tempPositions = tempPositions;
+        this.permanentPositions = permanentPositions;
+        this.relevantPositions = relevantPositions;
+        this.relevantTempPositions = relevantTempPositions;
+        this.relevantPermanentPositions = relevantPermanentPositions;
+    }
+
     //GETTERS AND SETTERS
 
     public String getCompanyName(){
