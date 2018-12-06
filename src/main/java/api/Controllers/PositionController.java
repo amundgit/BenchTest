@@ -14,6 +14,7 @@ import api.Pojos.*;
 
 import api.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @CrossOrigin
@@ -23,6 +24,40 @@ public class PositionController {
     @Autowired
     PositionRepository positionRepository;
 
+    @Autowired
+    DateRepository dateRepository;
+
+    @Autowired
+    CompanyRepository companyRepository;
+
     @GetMapping(path = "/getall")
     public @ResponseBody Iterable<Position> getAllPositions(){return positionRepository.findAll();}
+
+    @PostMapping(path = "/add")
+    public @ResponseBody String addPosition(@RequestBody Map<String, Object> body){
+        String returnString = "success";
+        LocalDate currentDate = LocalDate.now();
+        Date date = dateRepository.getByLocalDate(currentDate);
+        String companyName = body.get("companyName").toString();
+        String positionDuration = body.get("positionDuration").toString();
+        String positionName = body.get("positionName").toString();
+        int noOfPositions = Integer.parseInt(body.get("noOfPositions").toString());
+        String field = body.get("field").toString();
+        Company company = companyRepository.getByCompanyAndDate(companyName, currentDate);
+        Position newPosition = new Position(date, company, positionDuration, positionName, noOfPositions, field);
+        try {
+            String area = body.get("area").toString();
+            newPosition.setArea(area);
+        } catch (Exception e){
+            System.out.println("Area not found");
+        }
+        try {
+            String customer = body.get("customer").toString();
+            newPosition.setCustomer(customer);
+        } catch (Exception e){
+            System.out.println("Customer not found");
+        }
+        positionRepository.save(newPosition);
+        return returnString;
+    }
 }

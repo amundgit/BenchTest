@@ -33,6 +33,18 @@ public class Position {
 
     private String customer = "";
 
+    //CONSTRUCTORS
+    public Position(){}
+
+    public Position(Date date, Company company, String positionDuration, String positionName, int noOfPositions, String field){
+        this.date = date;
+        this.company = company;
+        this.positionDuration = positionDuration;
+        this.positionName = positionName;
+        this.noOfPositions = noOfPositions;
+        this.field = field;
+    }
+
     //GETTERS AND SETTERS
     public Integer getPositionId() {
         return positionId;
