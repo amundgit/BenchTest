@@ -36,12 +36,13 @@ public class CompanyController {
         LocalDate currentDate = LocalDate.now();
         Date date = dateRepository.getByLocalDate(currentDate);
         String companyName = body.get("companyName").toString();
+        int totalPositions = Integer.parseInt(body.get("totalPositions").toString());
         int tempPositions = Integer.parseInt(body.get("tempPositions").toString());
         int permanentPositions = Integer.parseInt(body.get("permanentPositions").toString());
         int relevantPositions = Integer.parseInt(body.get("relevantPositions").toString());
         int relevantTempPositions = Integer.parseInt(body.get("relevantTempPositions").toString());
         int relevantPermanentPositions = Integer.parseInt(body.get("relevantPermanentPositions").toString());
-        Company newCompany = new Company(companyName, date, tempPositions, permanentPositions, relevantPositions, relevantTempPositions, relevantPermanentPositions);
+        Company newCompany = new Company(companyName, date, totalPositions, tempPositions, permanentPositions, relevantPositions, relevantTempPositions, relevantPermanentPositions);
         companyRepository.save(newCompany);
         return returnString;
     }

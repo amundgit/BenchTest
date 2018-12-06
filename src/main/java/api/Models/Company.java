@@ -12,6 +12,8 @@ public class Company {
     @JoinColumn(name = "date_collected", nullable = false)
     private Date date;
 
+    private int totalPositions;
+
     private int tempPositions;
 
     private int permanentPositions;
@@ -30,9 +32,10 @@ public class Company {
         this.company = company;
     }
 
-    public Company(String company, Date date, int tempPositions, int permanentPositions, int relevantPositions, int relevantTempPositions, int relevantPermanentPositions){
+    public Company(String company, Date date, int totalPositions, int tempPositions, int permanentPositions, int relevantPositions, int relevantTempPositions, int relevantPermanentPositions){
         this.company = company;
         this.date = date;
+        this.totalPositions = totalPositions;
         this.tempPositions = tempPositions;
         this.permanentPositions = permanentPositions;
         this.relevantPositions = relevantPositions;
@@ -95,5 +98,13 @@ public class Company {
 
     public void setRelevantPermanentPositions(int relevantPermanentPositions) {
         this.relevantPermanentPositions = relevantPermanentPositions;
+    }
+
+    public int getTotalPositions() {
+        return totalPositions;
+    }
+
+    public void setTotalPositions(int totalPositions) {
+        this.totalPositions = totalPositions;
     }
 }
