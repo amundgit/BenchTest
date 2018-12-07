@@ -82,4 +82,40 @@ public class PositionController {
         }
         return returnString;
     }
+
+    @PostMapping(path = "/addTest")
+    public @ResponseBody String addPositionTest(@RequestBody Map<String, Object> body){
+        String returnString = "success";
+        String dateArr[] = body.get("date").toString().split("-");
+        LocalDate currentDate = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        String companyName = body.get("companyName").toString();
+        String positionDuration = body.get("positionDuration").toString();
+        String positionName = body.get("positionName").toString();
+        int noOfPositions = Integer.parseInt(body.get("noOfPositions").toString());
+        String field = body.get("field").toString();
+        Position existenceCheck = positionRepository.exists(currentDate,companyName,positionDuration,positionName,noOfPositions,field);
+        if(existenceCheck == null){
+            Date date = dateRepository.getByLocalDate(currentDate);
+            Company company = companyRepository.getByCompanyAndDate(companyName, currentDate);
+            Position newPosition = new Position(date, company, positionDuration, positionName, noOfPositions, field);
+            try {
+                String area = body.get("area").toString();
+                newPosition.setArea(area);
+            } catch (Exception e){
+                System.out.println("Area not found");
+            }
+            try {
+                String customer = body.get("customer").toString();
+                newPosition.setCustomer(customer);
+            } catch (Exception e){
+                System.out.println("Customer not found");
+            }
+            positionRepository.save(newPosition);
+        }else{
+            returnString = "Position already exists";
+        }
+
+        return returnString;
+    }
 }
