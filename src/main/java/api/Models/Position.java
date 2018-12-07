@@ -18,7 +18,10 @@ public class Position {
 
     //FOREIGN KEY FOR COMPANY
     @ManyToOne(fetch = FetchType.EAGER, optional=false)
-    @JoinColumn(name = "company_name", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name= "company_name", nullable = false),
+            @JoinColumn(name= "date_test", nullable = false)
+    })
     private Company company;
 
     private String positionDuration;
