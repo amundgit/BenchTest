@@ -62,8 +62,12 @@ public class Position {
         this.date = date;
     }
 
-    public Company getCompany() {
+    /*public Company getCompany() {
         return company;
+    }*/
+
+    public String getCompanyName(){
+        return company.getCompanyName();
     }
 
     public void setCompany(Company company) {
