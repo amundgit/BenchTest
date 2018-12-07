@@ -60,4 +60,20 @@ public class PositionController {
         positionRepository.save(newPosition);
         return returnString;
     }
+
+    @PostMapping(path = "/uniquetest")
+    public @ResponseBody String uniqueTest(@RequestBody Map<String, Object> body){
+        String returnString = "is a new position";
+        LocalDate currentDate = LocalDate.now();
+        String companyName = body.get("companyName").toString();
+        String positionDuration = body.get("positionDuration").toString();
+        String positionName = body.get("positionName").toString();
+        int noOfPositions = Integer.parseInt(body.get("noOfPositions").toString());
+        String field = body.get("field").toString();
+        boolean test = positionRepository.exists(currentDate,companyName,positionDuration,positionName,noOfPositions,field);
+        if(test){
+            returnString = "already exists";
+        }
+        return returnString;
+    }
 }
