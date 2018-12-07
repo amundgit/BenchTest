@@ -2,15 +2,12 @@ package api.Models;
 
 import javax.persistence.*;
 
+import api.CompositeIds.CompanyId;
+
 @Entity
 public class Company {
-    @Id
-    private String company;
-
-    //FOREIGN KEY FOR DATE
-    @ManyToOne(fetch = FetchType.EAGER, optional=false)
-    @JoinColumn(name = "date_collected", nullable = false)
-    private Date date;
+    @EmbeddedId
+    private CompanyId companyId;
 
     private int totalPositions;
 
@@ -28,13 +25,12 @@ public class Company {
     //CONSTRUCTORS
     public Company(){}
 
-    public Company(String company){
-        this.company = company;
+    public Company(String company, Date date){
+        this.companyId = new CompanyId(date,company);
     }
 
     public Company(String company, Date date, int totalPositions, int tempPositions, int permanentPositions, int relevantPositions, int relevantTempPositions, int relevantPermanentPositions){
-        this.company = company;
-        this.date = date;
+        this.companyId = new CompanyId(date,company);
         this.totalPositions = totalPositions;
         this.tempPositions = tempPositions;
         this.permanentPositions = permanentPositions;
@@ -45,19 +41,12 @@ public class Company {
 
     //GETTERS AND SETTERS
 
-    public String getCompanyName(){
-        return company;
-    }
-    public void setCompanyName(String company){
-        this.company = company;
+    public CompanyId getCompanyId(){
+        return companyId;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCompanyId(CompanyId companyId){
+        this.companyId = companyId;
     }
 
     public int getTempPositions(){
