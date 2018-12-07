@@ -16,7 +16,7 @@ public interface PositionRepository extends CrudRepository<Position, Integer>{
     @Query("SELECT p FROM Position p WHERE date_collected = :date")
     List<Position> getByDate(@Param("date") LocalDate date);
 
-    @Query("SELECT p FROM Position p WHERE date_collected = :date AND companyName = :companyName AND positionDuration = :positionDuration AND positionName = :positionName AND noOfPositions = :noOfPositions AND field = :field")
+    @Query("SELECT p FROM Position p WHERE date_collected = :date AND company_name = :companyName AND position_duration = :positionDuration AND position_name = :positionName AND no_of_positions = :noOfPositions AND field = :field")
     Position exists(@Param("date") LocalDate date, @Param("companyName") String companyName, @Param("positionDuration") String positionDuration,
                      @Param("positionName") String positionName, @Param("noOfPositions") Integer noOfPositions, @Param("field") String field);
 }
