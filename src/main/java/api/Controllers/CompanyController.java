@@ -46,6 +46,25 @@ public class CompanyController {
         companyRepository.save(newCompany);
         return returnString;
     }
+
+    @PostMapping(path = "/addtest")
+    public @ResponseBody String addCompanyTest(@RequestBody Map<String, Object> body){
+        String returnString = "success";
+        String dateArr[] = body.get("date").toString().split("-");
+        LocalDate currentDate = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        Date date = dateRepository.getByLocalDate(currentDate);
+        String companyName = body.get("companyName").toString();
+        int totalPositions = Integer.parseInt(body.get("totalPositions").toString());
+        int tempPositions = Integer.parseInt(body.get("tempPositions").toString());
+        int permanentPositions = Integer.parseInt(body.get("permanentPositions").toString());
+        int relevantPositions = Integer.parseInt(body.get("relevantPositions").toString());
+        int relevantTempPositions = Integer.parseInt(body.get("relevantTempPositions").toString());
+        int relevantPermanentPositions = Integer.parseInt(body.get("relevantPermanentPositions").toString());
+        Company newCompany = new Company(companyName, date, totalPositions, tempPositions, permanentPositions, relevantPositions, relevantTempPositions, relevantPermanentPositions);
+        companyRepository.save(newCompany);
+        return returnString;
+    }
 }
 
 /*
