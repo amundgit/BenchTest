@@ -14,6 +14,7 @@ import api.Pojos.*;
 
 import api.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @CrossOrigin
@@ -30,6 +31,18 @@ public class DateController {
     public @ResponseBody String createDate(){
         String returnString = "success";
         Date currentDate = new Date();
+        dateRepository.save(currentDate);
+        return returnString;
+    }
+
+    @PostMapping(path = "/testcreate")
+    public @ResponseBody String createTestDate(@RequestBody Map<String, Object> body){
+        String returnString = "success";
+        Date currentDate = new Date();
+        String dateArr[] = body.get("date").toString().split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        currentDate.setDate(date);
         dateRepository.save(currentDate);
         return returnString;
     }
