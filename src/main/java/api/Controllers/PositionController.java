@@ -70,8 +70,8 @@ public class PositionController {
         String positionName = body.get("positionName").toString();
         int noOfPositions = Integer.parseInt(body.get("noOfPositions").toString());
         String field = body.get("field").toString();
-        boolean test = positionRepository.exists(currentDate,companyName,positionDuration,positionName,noOfPositions,field);
-        if(test){
+        Position test = positionRepository.exists(currentDate,companyName,positionDuration,positionName,noOfPositions,field);
+        if(test != null){
             returnString = "already exists";
         }
         return returnString;
