@@ -27,9 +27,21 @@ public class CompanyController {
     @Autowired
     DateRepository dateRepository;
 
+    /**
+     * Simple method to get all stored companies as JSON objects. Accessed by get call.
+     * @return      List of all stored companies as JSON objects
+     */
     @GetMapping(path = "/getall")
     public @ResponseBody Iterable<Company> getAllCompanies(){return companyRepository.findAll();}
 
+    /**
+     * Method to add a company with relevant data, accessed by post call. Takes a JSON object containing variables companyName, totalPositions, tempPositions, permanentPositions, relevantPositions, relevantTempPositions and relevantPermanentPositions, all strings.
+     * Adds company with the above data and current date.
+     * Can also be used to update an existing company, given that company name and date are equal to an existing company: Takes the same variables and overwrites previously stored ones.
+     * Returns a string to confirm success.
+     * @param body  JSON object containing necessary variables, as mentioned above.
+     * @return      Confirmation String
+     */
     @PostMapping(path = "/add")
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
         String returnString = "success";
@@ -47,6 +59,15 @@ public class CompanyController {
         return returnString;
     }
 
+    /**
+     * DEBUG METHOD: Allows creation of company with a specified date. Not intended for release use. Takes a String date in addition to the variables in the normal function.
+     * Method to add a company with relevant data, accessed by post call. Takes a JSON object containing variables companyName, totalPositions, tempPositions, permanentPositions, relevantPositions, relevantTempPositions and relevantPermanentPositions, all strings.
+     * Adds company with the above data and current date.
+     * Can also be used to update an existing company, given that company name and date are equal to an existing company: Takes the same variables and overwrites previously stored ones.
+     * Returns a string to confirm success.
+     * @param body  JSON object containing necessary variables, as mentioned above.
+     * @return      Confirmation String
+     */
     @PostMapping(path = "/addtest")
     public @ResponseBody String addCompanyTest(@RequestBody Map<String, Object> body){
         String returnString = "success";
