@@ -67,6 +67,29 @@ public class PositionController {
         return count;
     }
 
+    @GetMapping(path = "/countbycompany")
+    public @ResponseBody Integer countPositionsByCompanyName(@RequestParam(name = "companyName")String companyName){
+        List<Integer> list= positionRepository.countByCompanyName(companyName);
+        int count = 0;
+        for(Integer i : list){
+            count += i;
+        }
+        return count;
+    }
+
+    @GetMapping(path = "/countbycompanyanddate")
+    public @ResponseBody Integer countPositionsByCompanyNameAndDate(@RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
+        String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        List<Integer> list= positionRepository.countByCompanyNameAndDate(companyName,date);
+        int count = 0;
+        for(Integer i : list){
+            count += i;
+        }
+        return count;
+    }
+
     /**
      * Lets the user add a position to the database with current date. Accessed by post request containing a JSON with necessary data.
      * JSON needs to contain variables companyName, positionDuration, positionName, noOfPositions and field.
