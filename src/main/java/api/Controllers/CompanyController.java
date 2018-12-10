@@ -34,6 +34,27 @@ public class CompanyController {
     @GetMapping(path = "/getall")
     public @ResponseBody Iterable<Company> getAllCompanies(){return companyRepository.findAll();}
 
+    @GetMapping(path = "/getbydate")
+    public @ResponseBody Iterable<Company> getCompaniesByDate(@RequestParam(name = "searchDate")String searchDate){
+        String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        return companyRepository.getByDate(date);
+    }
+
+    @GetMapping(path = "getbyname")
+    public @ResponseBody Iterable<Company> getCompaniesByName(@RequestParam(name = "companyName")String companyName){
+        return companyRepository.getByCompany(companyName);
+    }
+
+    @GetMapping(path = "getbynameanddate")
+    public @ResponseBody Company getCompanyByNameAndDate(@RequestParam(name = "companyName")String companyName,@RequestParam(name = "searchDate")String searchDate){
+        String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        return companyRepository.getByCompanyAndDate(companyName,date);
+    }
+
     /**
      * Method to add a company with relevant data, accessed by post call. Takes a JSON object containing variables companyName, totalPositions, tempPositions, permanentPositions, relevantPositions, relevantTempPositions and relevantPermanentPositions, all strings.
      * Adds company with the above data and current date.
