@@ -15,6 +15,7 @@ import api.Pojos.*;
 import api.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -54,6 +55,16 @@ public class PositionController {
     @GetMapping(path = "/getbyfieldandcompany")
     public @ResponseBody Iterable<Position> getPositionsByFieldAndCompanyName(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName){
         return positionRepository.getByFieldAndCompanyName(field,companyName);
+    }
+
+    @GetMapping(path = "/countbyfieldandcompany")
+    public @ResponseBody Integer countPositionsByFieldAndCompanyName(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName){
+        List<Integer> list= positionRepository.countByFieldAndCompanyName(field,companyName);
+        int count = 0;
+        for(Integer i : list){
+            count += i;
+        }
+        return count;
     }
 
     /**
