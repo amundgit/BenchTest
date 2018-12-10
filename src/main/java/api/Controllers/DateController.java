@@ -27,6 +27,10 @@ public class DateController {
     @GetMapping(path = "/getall")
     public @ResponseBody Iterable<Date> getAllDates(){return dateRepository.findAll();}
 
+    /**
+     * Creates an entry in the date table with today's date. Returns string to confirm successful creation
+     * @return      Confirmation String
+     */
     @GetMapping(path = "/create")
     public @ResponseBody String createDate(){
         String returnString = "success";
@@ -35,6 +39,11 @@ public class DateController {
         return returnString;
     }
 
+    /**
+     * DEBUG METHOD: Allows creation of specified date. Only meant for debug use, hence "cumbersome" access through post with JSON containing date.
+     * @param body  JSON object containing a date as string, variable name date
+     * @return      Confirmation String
+     */
     @PostMapping(path = "/testcreate")
     public @ResponseBody String createTestDate(@RequestBody Map<String, Object> body){
         String returnString = "success";
@@ -47,30 +56,3 @@ public class DateController {
         return returnString;
     }
 }
-
-/*
-@PostMapping(path = "/update")
-	public @ResponseBody Object updateGoalType(@RequestBody Map<String, Object> body) {
-		Messages msg = new Messages();
-		msg = SecurityUtil.verifySession(body.get("sessionid").toString(), body.get("sessionuser").toString(), userRepository);
-		if (msg.getRole() != 1) {
-			return msg;
-		} else {
-			boolean check = true;
-			Integer goal_type_id = Integer.parseInt(body.get("goal_type_id").toString());
-			Goal_type goaltype = goal_typeRepository.getById(goal_type_id);
-			if(goaltype != null){
-				check = false;
-				msg.setError("Error: Invalid id");
-			}
-			if (check) {
-				String type = body.get("type").toString();
-				goaltype.setType(type);
-				goal_typeRepository.save(goaltype);
-				// Return the id the new address got in the database.
-				msg.setMessage(goaltype.getId().toString());
-			}
-			return msg;
-		}
-	}
- */
