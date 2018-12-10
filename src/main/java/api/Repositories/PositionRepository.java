@@ -32,6 +32,6 @@ public interface PositionRepository extends CrudRepository<Position, Integer>{
     @Query("SELECT p FROM Position p WHERE field = :field AND company_name = :companyName")
     List<Position> getByFieldAndCompanyName(@Param("field") String field, @Param("companyName") String companyName);
 
-    @Query("SELECT * FROM Position p.no_of_positions WHERE field = :field AND company_name = :companyName")
+    @Query("SELECT (*) FROM Position p.no_of_positions WHERE field = :field AND company_name = :companyName")
     List<Integer> countByFieldAndCompanyName(@Param("field") String field, @Param("companyName") String companyName);
 }
