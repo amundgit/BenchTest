@@ -33,6 +33,9 @@ public class PositionController {
     @GetMapping(path = "/getall")
     public @ResponseBody Iterable<Position> getAllPositions(){return positionRepository.findAll();}
 
+    @GetMapping(path = "/getbyfield")
+    public @ResponseBody Iterable<Position> getPositionsByField(@RequestParam(name = "field")String field){return positionRepository.getByField(field);}
+
     @PostMapping(path = "/add")
     public @ResponseBody String addPosition(@RequestBody Map<String, Object> body){
         String returnString = "success";
