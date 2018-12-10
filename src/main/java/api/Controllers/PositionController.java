@@ -47,6 +47,14 @@ public class PositionController {
     public @ResponseBody Iterable<Position> getPositionsByField(@RequestParam(name = "field")String field){return positionRepository.getByField(field);}
 
     /**
+     * Method to get all stored positions for a given company name as JSONs. Accessed by get call.
+     * @param companyName String containing the name of the company
+     * @return      List of all stored positions in given field as JSONs
+     */
+    @GetMapping(path = "/getbycompanyname")
+    public @ResponseBody Iterable<Position> getPositionsByCompanyName(@RequestParam(name = "companyName")String companyName){return positionRepository.getByCompanyName(companyName);}
+
+    /**
      * Method to get all stored positions in a given field, for a given company, as JSONs. Accessed by get call.
      * @param field String containing the field name.
      * @param companyName String containing company name.
@@ -57,6 +65,12 @@ public class PositionController {
         return positionRepository.getByFieldAndCompanyName(field,companyName);
     }
 
+    /**
+     * Method to count the number of positions in a given field, from a given company. Returns an int with the count, accessed by get call.
+     * @param field         String containing the name of the field
+     * @param companyName   String containing the name of the company
+     * @return              An int with the number of positions
+     */
     @GetMapping(path = "/countbyfieldandcompany")
     public @ResponseBody Integer countPositionsByFieldAndCompanyName(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName){
         List<Integer> list= positionRepository.countByFieldAndCompanyName(field,companyName);
@@ -67,6 +81,11 @@ public class PositionController {
         return count;
     }
 
+    /**
+     * Method to count the number of positions from a given company. Returns an int with the count, accessed by get call.
+     * @param companyName   String containing the name of the company
+     * @return              An int with the number of positions
+     */
     @GetMapping(path = "/countbycompany")
     public @ResponseBody Integer countPositionsByCompanyName(@RequestParam(name = "companyName")String companyName){
         List<Integer> list= positionRepository.countByCompanyName(companyName);
@@ -77,6 +96,12 @@ public class PositionController {
         return count;
     }
 
+    /**
+     * Method to count the number of positions from a given company, on a given date. Returns an int with the count, accessed by get call.
+     * @param companyName   String containing the name of the company
+     * @param searchDate    String containing the date, format YYYY-MM-DD
+     * @return              An int with the number of positions
+     */
     @GetMapping(path = "/countbycompanyanddate")
     public @ResponseBody Integer countPositionsByCompanyNameAndDate(@RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
