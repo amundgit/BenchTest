@@ -55,6 +55,14 @@ public class PositionController {
     public @ResponseBody Iterable<Position> getPositionsByCompanyName(@RequestParam(name = "companyName")String companyName){return positionRepository.getByCompanyName(companyName);}
 
     /**
+     * Method to get all stored positions for a given duration as JSONs. Accessed by get call.
+     * @param duration String containing the duration (temporary/permanent or similar)
+     * @return      List of all stored positions for given duration as JSONs
+     */
+    @GetMapping(path = "/getbyduration")
+    public @ResponseBody Iterable<Position> getPositionsByDuration(@RequestParam(name = "duration")String duration){return positionRepository.getByDuration(duration);}
+
+    /**
      * Method to get all stored positions for a given date as JSONs. Accessed by get call.
      * @param searchDate String containing the search date, format YYYY-MM-DD.
      * @return      List of all stored positions for given date as JSONs
