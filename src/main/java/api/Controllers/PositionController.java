@@ -57,7 +57,7 @@ public class PositionController {
         return positionRepository.getByFieldAndCompanyName(field,companyName);
     }
 
-    /*@GetMapping(path = "/countbyfieldandcompany")
+    @GetMapping(path = "/countbyfieldandcompany")
     public @ResponseBody Integer countPositionsByFieldAndCompanyName(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName){
         List<Integer> list= positionRepository.countByFieldAndCompanyName(field,companyName);
         int count = 0;
@@ -65,7 +65,7 @@ public class PositionController {
             count += i;
         }
         return count;
-    }*/
+    }
 
     /**
      * Lets the user add a position to the database with current date. Accessed by post request containing a JSON with necessary data.
