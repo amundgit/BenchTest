@@ -34,6 +34,11 @@ public class CompanyController {
     @GetMapping(path = "/getall")
     public @ResponseBody Iterable<Company> getAllCompanies(){return companyRepository.findAll();}
 
+    /**
+     * Simple method to get all stored companies for a given date as JSON objects. Accessed by get call
+     * @param searchDate    String containing the search date, format YYYY-MM-DD
+     * @return              List of all stored companies for the given date as JSON objects
+     */
     @GetMapping(path = "/getbydate")
     public @ResponseBody Iterable<Company> getCompaniesByDate(@RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
@@ -42,11 +47,22 @@ public class CompanyController {
         return companyRepository.getByDate(date);
     }
 
+    /**
+     * Simple method to get all stored companies for a given company name as JSON objects. Accessed by get call
+     * @param companyName   String containing company name
+     * @return              List of all stored companies for given name as JSON objects
+     */
     @GetMapping(path = "getbyname")
     public @ResponseBody Iterable<Company> getCompaniesByName(@RequestParam(name = "companyName")String companyName){
         return companyRepository.getByCompany(companyName);
     }
 
+    /**
+     * Method to get specific company by company name and date as JSON object. Accessed by get call
+     * @param companyName   String containing company name
+     * @param searchDate    String containing search date, format YYYY-MM-DD
+     * @return              Company with given name and date, as JSON object
+     */
     @GetMapping(path = "getbynameanddate")
     public @ResponseBody Company getCompanyByNameAndDate(@RequestParam(name = "companyName")String companyName,@RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
