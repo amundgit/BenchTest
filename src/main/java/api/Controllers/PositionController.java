@@ -49,10 +49,23 @@ public class PositionController {
     /**
      * Method to get all stored positions for a given company name as JSONs. Accessed by get call.
      * @param companyName String containing the name of the company
-     * @return      List of all stored positions in given field as JSONs
+     * @return      List of all stored positions for given company name as JSONs
      */
     @GetMapping(path = "/getbycompanyname")
     public @ResponseBody Iterable<Position> getPositionsByCompanyName(@RequestParam(name = "companyName")String companyName){return positionRepository.getByCompanyName(companyName);}
+
+    /**
+     * Method to get all stored positions for a given date as JSONs. Accessed by get call.
+     * @param searchDate String containing the search date, format YYYY-MM-DD.
+     * @return      List of all stored positions for given date as JSONs
+     */
+    @GetMapping(path = "/getbydate")
+    public @ResponseBody Iterable<Position> getPositionsByDate(@RequestParam(name = "searchDate")String searchDate){
+        String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        return positionRepository.getByDate(date);
+    }
 
     /**
      * Method to get all stored positions in a given field, for a given company, as JSONs. Accessed by get call.
@@ -63,6 +76,20 @@ public class PositionController {
     @GetMapping(path = "/getbyfieldandcompany")
     public @ResponseBody Iterable<Position> getPositionsByFieldAndCompanyName(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName){
         return positionRepository.getByFieldAndCompanyName(field,companyName);
+    }
+
+    /**
+     * Method to get all stored positions for a given company, on a given date, as JSONs. Accessed by get call.
+     * @param companyName   String containing company name
+     * @param searchDate    String containing search date, format YYYY-MM-DD
+     * @return              List of all stored positions for given company and date as JSONs
+     */
+    @GetMapping(path = "/getbycompanyanddate")
+    public @ResponseBody Iterable<Position> getPositionsByCompanyNameAndDate(@RequestParam(name = "companyName")String companyName, @RequestParam(name = "date")String searchDate){
+        String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        return positionRepository.getByCompanyNameAndDate(companyName, date);
     }
 
     /**
