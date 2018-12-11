@@ -29,6 +29,12 @@ public interface PositionRepository extends CrudRepository<Position, Integer>{
     @Query("SELECT p FROM Position p WHERE field = :field AND company_name = :companyName")
     List<Position> getByFieldAndCompanyName(@Param("field") String field, @Param("companyName") String companyName);
 
+    @Query("SELECT p FROM Position p WHERE field = :field AND position_duration = :positionDuration")
+    List<Position> getByFieldAndDuration(@Param("field") String field, @Param("positionDuration") String positionDuration);
+
+    @Query("SELECT p FROM Position p WHERE position_duration = :positionDuration AND company_name = :companyName")
+    List<Position> getByDurationAndCompanyName(@Param("positionDuration") String positionDuration, @Param("companyName") String companyName);
+
     //QUERIES WITH DATE
     @Query("SELECT p FROM Position p WHERE company_name = :companyName AND date_collected = :date")
     List<Position> getByCompanyNameAndDate(@Param("companyName") String companyName, @Param("date") LocalDate date);
@@ -41,6 +47,12 @@ public interface PositionRepository extends CrudRepository<Position, Integer>{
 
     @Query("SELECT p FROM Position p WHERE field = :field AND company_name = :companyName AND date_collected = :date")
     List<Position> getByFieldAndCompanyNameAndDate(@Param("field") String field, @Param("companyName") String companyName, @Param("date") LocalDate date);
+
+    @Query("SELECT p FROM Position p WHERE field = :field AND position_duration = :positionDuration AND date_collected = :date")
+    List<Position> getByFieldAndDurationAndDate(@Param("field") String field, @Param("positionDuration") String positionDuration, @Param("date") LocalDate date);
+
+    @Query("SELECT p FROM Position p WHERE position_duration = :positionDuration AND company_name = :companyName AND date_collected = :date")
+    List<Position> getByDurationAndCompanyNameAndDate(@Param("positionDuration") String positionDuration, @Param("companyName") String companyName, @Param("date") LocalDate date);
 
     //BASIC COUNT QUERIES
     @Query("SELECT p.noOfPositions FROM Position p WHERE company_name = :companyName")
@@ -55,6 +67,12 @@ public interface PositionRepository extends CrudRepository<Position, Integer>{
     @Query("SELECT p.noOfPositions FROM Position p WHERE field = :field AND company_name = :companyName")
     List<Integer> countByFieldAndCompanyName(@Param("field") String field, @Param("companyName") String companyName);
 
+    @Query("SELECT p.noOfPositions FROM Position p WHERE field = :field AND position_duration = :positionDuration")
+    List<Integer> countByFieldAndDuration(@Param("field") String field, @Param("positionDuration") String positionDuration);
+
+    @Query("SELECT p.noOfPositions FROM Position p WHERE position_duration = :positionDuration AND company_name = :companyName")
+    List<Integer> countByDurationAndCompanyName(@Param("positionDuration") String positionDuration, @Param("companyName") String companyName);
+
     //COUNT QUERIES WITH DATE
     @Query("SELECT p.noOfPositions FROM Position p WHERE date_collected = :date AND company_name = :companyName")
     List<Integer> countByCompanyNameAndDate(@Param("companyName") String companyName,@Param("date") LocalDate date);
@@ -67,6 +85,12 @@ public interface PositionRepository extends CrudRepository<Position, Integer>{
 
     @Query("SELECT p.noOfPositions FROM Position p WHERE field = :field AND company_name = :companyName AND date_collected = :date")
     List<Integer> countByFieldAndCompanyNameAndDate(@Param("field") String field, @Param("companyName") String companyName, @Param("date") LocalDate date);
+
+    @Query("SELECT p.noOfPositions FROM Position p WHERE field = :field AND position_duration = :positionDuration AND date_collected = :date")
+    List<Integer> countByFieldAndDurationAndDate(@Param("field") String field, @Param("positionDuration") String positionDuration, @Param("date") LocalDate date);
+
+    @Query("SELECT p.noOfPositions FROM Position p WHERE position_duration = :positionDuration AND company_name = :companyName AND date_collected = :date")
+    List<Integer> countByDurationAndCompanyNameAndDate(@Param("positionDuration") String positionDuration, @Param("companyName") String companyName, @Param("date") LocalDate date);
 
     //OTHER QUERIES
     @Query("SELECT p FROM Position p WHERE date_collected = :date AND company_name = :companyName AND position_duration = :positionDuration AND position_name = :positionName AND no_of_positions = :noOfPositions AND field = :field")

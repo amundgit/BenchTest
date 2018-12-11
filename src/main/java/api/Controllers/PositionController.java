@@ -81,11 +81,33 @@ public class PositionController {
      * Method to get all stored positions in a given field, for a given company, as JSONs. Accessed by get call.
      * @param field String containing the field name.
      * @param companyName String containing company name.
-     * @return      List of all stored positions in given field as JSONs
+     * @return      List of all stored positions in given field, for given company, as JSONs
      */
     @GetMapping(path = "/getbyfieldandcompany")
     public @ResponseBody Iterable<Position> getPositionsByFieldAndCompanyName(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName){
         return positionRepository.getByFieldAndCompanyName(field,companyName);
+    }
+
+    /**
+     * Method to get all stored positions in a given field, with a given duration, as JSONs. Accessed by get call.
+     * @param field             String containing the field name.
+     * @param positionDuration  String containing the duration (temporary/permanent or similar)
+     * @return                  List of all stored positions in given field, with given duration, as JSONs
+     */
+    @GetMapping(path = "/getbyfieldandduration")
+    public @ResponseBody Iterable<Position> getPositionsByFieldAndDuration(@RequestParam(name = "field")String field, @RequestParam(name = "positionDuration")String positionDuration){
+        return positionRepository.getByFieldAndDuration(field,positionDuration);
+    }
+
+    /**
+     * Method to get all stored positions with a given duration, for a given company, as JSONs. Accessed by get call.
+     * @param positionDuration  String containing the duration (temporary/permanent or similar)
+     * @param companyName       String containing company name.
+     * @return                  List of all stored positions with given duration, for given company, as JSONs
+     */
+    @GetMapping(path = "/getbydurationandcompany")
+    public @ResponseBody Iterable<Position> getPositionsByDurationAndCompanyName(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "companyName")String companyName){
+        return positionRepository.getByDurationAndCompanyName(positionDuration,companyName);
     }
 
     //BASIC QUERIES WITH DATE
@@ -144,6 +166,36 @@ public class PositionController {
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
         return positionRepository.getByFieldAndCompanyNameAndDate(field, companyName, date);
+    }
+
+    /**
+     * Method to get all stored positions in a given field, for a given company, on a given date, as JSONs. Accessed by get call.
+     * @param field             String containing the field name
+     * @param positionDuration  String containing the duration (temporary/permanent or similar)
+     * @param searchDate        String containing search date, format YYYY-MM-DD
+     * @return                  List of all stored positions for given field, company and date as JSONs
+     */
+    @GetMapping(path = "/getbyfieldanddurationanddate")
+    public @ResponseBody Iterable<Position> getPositionsByFieldAndDurationAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "date")String searchDate){
+        String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        return positionRepository.getByFieldAndDurationAndDate(field, positionDuration, date);
+    }
+
+    /**
+     * Method to get all stored positions in a given field, for a given company, on a given date, as JSONs. Accessed by get call.
+     * @param positionDuration  String containing the duration (temporary/permanent or similar)
+     * @param companyName       String containing company name
+     * @param searchDate        String containing search date, format YYYY-MM-DD
+     * @return                  List of all stored positions for given field, company and date as JSONs
+     */
+    @GetMapping(path = "/getbydurationandcompanyanddate")
+    public @ResponseBody Iterable<Position> getPositionsByDurationAndCompanyNameAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "date")String searchDate){
+        String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        return positionRepository.getByDurationAndCompanyNameAndDate(positionDuration, companyName, date);
     }
 
     //BASIC COUNT QUERIES
@@ -209,6 +261,38 @@ public class PositionController {
         return count;
     }
 
+    /**
+     * Method to count the number of positions in a given field, with a given duration. Returns an int with the count, accessed by get call.
+     * @param field             String containing the name of the field
+     * @param positionDuration  String containing the duration (temporary/permanent or similar)
+     * @return                  An int with the number of positions
+     */
+    @GetMapping(path = "/countbyfieldandduration")
+    public @ResponseBody Integer countPositionsByFieldAndDuration(@RequestParam(name = "field")String field, @RequestParam(name = "positionDuration")String positionDuration){
+        List<Integer> list= positionRepository.countByFieldAndDuration(field,positionDuration);
+        int count = 0;
+        for(Integer i : list){
+            count += i;
+        }
+        return count;
+    }
+
+    /**
+     * Method to count the number of positions with a given duration, from a given company. Returns an int with the count, accessed by get call.
+     * @param positionDuration  String containing the duration (temporary/permanent or similar)
+     * @param companyName       String containing the name of the company
+     * @return                  An int with the number of positions
+     */
+    @GetMapping(path = "/countbydurationandcompany")
+    public @ResponseBody Integer countPositionsByDurationAndCompanyName(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "companyName")String companyName){
+        List<Integer> list= positionRepository.countByDurationAndCompanyName(positionDuration,companyName);
+        int count = 0;
+        for(Integer i : list){
+            count += i;
+        }
+        return count;
+    }
+
     //COUNT QUERIES WITH DATE
     /**
      * Method to count the number of positions from a given company, on a given date. Returns an int with the count, accessed by get call.
@@ -250,9 +334,9 @@ public class PositionController {
 
     /**
      * Method to count the number of positions with a given duration, on a given date. Returns an int with the count, accessed by get call.
-     * @param positionDuration         String containing the duration (temporary/permanent or similar)
-     * @param searchDate    String containing the date, format YYYY-MM-DD
-     * @return              An int with the number of positions
+     * @param positionDuration  String containing the duration (temporary/permanent or similar)
+     * @param searchDate        String containing the date, format YYYY-MM-DD
+     * @return                  An int with the number of positions
      */
     @GetMapping(path = "/countbydurationanddate")
     public @ResponseBody Integer countPositionsByDurationAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "searchDate")String searchDate){
@@ -268,7 +352,7 @@ public class PositionController {
     }
 
     /**
-     * Method to count the number of positions with in a given field, from a given company, on a given date. Returns an int with the count, accessed by get call.
+     * Method to count the number of positions in a given field, from a given company, on a given date. Returns an int with the count, accessed by get call.
      * @param field         String containing the name of the field
      * @param companyName   String containing the name of the company
      * @param searchDate    String containing the date, format YYYY-MM-DD
@@ -280,6 +364,46 @@ public class PositionController {
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
         List<Integer> list= positionRepository.countByFieldAndCompanyNameAndDate(field, companyName, date);
+        int count = 0;
+        for(Integer i : list){
+            count += i;
+        }
+        return count;
+    }
+
+    /**
+     * Method to count the number of positions in a given field, with a given duration, on a given date. Returns an int with the count, accessed by get call.
+     * @param field             String containing the name of the field
+     * @param positionDuration  String containing the duration (temporary/permanent or similar)
+     * @param searchDate        String containing the date, format YYYY-MM-DD
+     * @return                  An int with the number of positions
+     */
+    @GetMapping(path = "/countbyfieldanddurationanddate")
+    public @ResponseBody Integer countPositionsByFieldAndDurationAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "searchDate")String searchDate){
+        String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        List<Integer> list= positionRepository.countByFieldAndDurationAndDate(field, positionDuration, date);
+        int count = 0;
+        for(Integer i : list){
+            count += i;
+        }
+        return count;
+    }
+
+    /**
+     * Method to count the number of positions with a given duration, from a given company, on a given date. Returns an int with the count, accessed by get call.
+     * @param positionDuration  String containing the duration (temporary/permanent or similar)
+     * @param companyName       String containing the name of the company
+     * @param searchDate        String containing the date, format YYYY-MM-DD
+     * @return                  An int with the number of positions
+     */
+    @GetMapping(path = "/countbydurationandcompanyanddate")
+    public @ResponseBody Integer countPositionsByDurationAndCompanyNameAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
+        String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));
+        List<Integer> list= positionRepository.countByDurationAndCompanyNameAndDate(positionDuration, companyName, date);
         int count = 0;
         for(Integer i : list){
             count += i;
