@@ -3,6 +3,7 @@ package api.Models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Position {
@@ -57,8 +58,8 @@ public class Position {
         this.positionId = positionId;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDate getDate() {
+        return date.getDate();
     }
 
     public void setDate(Date date) {
