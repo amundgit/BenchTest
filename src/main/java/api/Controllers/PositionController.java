@@ -274,7 +274,7 @@ public class PositionController {
      * @param searchDate    String containing the date, format YYYY-MM-DD
      * @return              An int with the number of positions
      */
-    @GetMapping(path = "/countbydurationanddate")
+    @GetMapping(path = "/countbyfieldandcompanyanddate")
     public @ResponseBody Integer countPositionsByFieldAndCompanyNameAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
