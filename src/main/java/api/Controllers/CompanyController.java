@@ -87,7 +87,7 @@ public class CompanyController {
     @ApiOperation(value = "/add")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "body",
-            dataType = "Company",
+            dataType = "CompanyInput",
             examples = @io.swagger.annotations.Example(
                     value = {@ExampleProperty(value = "{'permanentPositions': '13', 'relevantPositions': '10'}", mediaType = "application/json")}
             ))
@@ -134,5 +134,18 @@ public class CompanyController {
         Company newCompany = new Company(companyName, date, totalPositions, tempPositions, permanentPositions, relevantPositions, relevantTempPositions, relevantPermanentPositions);
         companyRepository.save(newCompany);
         return returnString;
+    }
+
+    /**
+     * Utility class: Shows what inputs to addCompany should look like
+     */
+    public static class CompanyInput {
+        private String companyName;
+        private int totalPositions;
+        private int tempPositions;
+        private int permanentPositions;
+        private int relevantPositions;
+        private int relevantTempPositions;
+        private int relevantPermanentPositions;
     }
 }
