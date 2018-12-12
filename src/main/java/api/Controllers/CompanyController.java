@@ -87,11 +87,7 @@ public class CompanyController {
     @ApiOperation(value = "/add")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "body",
-            dataType = "CompanyInput",
-                    examples = @io.swagger.annotations.Example(
-                            value = {
-                                    @ExampleProperty(value = "{ \"companyName\": \"TestCompany\", \"totalPositions\": \"120\", \"tempPositions\": \"70\", \"permanentPositions\": \"50\", \"relevantPositions\": \"20\", \"relevantTempPositions\": \"15\", \"relevantPermanentPositions\": \"5\" }", mediaType = "application/json")
-                            }))
+            dataType = "Company")
     })
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
         String returnString = "success";
@@ -135,74 +131,5 @@ public class CompanyController {
         Company newCompany = new Company(companyName, date, totalPositions, tempPositions, permanentPositions, relevantPositions, relevantTempPositions, relevantPermanentPositions);
         companyRepository.save(newCompany);
         return returnString;
-    }
-
-    /**
-     * Utility class: Shows what inputs to addCompany should look like.
-     */
-    public static class CompanyInput {
-        private String companyName;
-        private int totalPositions;
-        private int tempPositions;
-        private int permanentPositions;
-        private int relevantPositions;
-        private int relevantTempPositions;
-        private int relevantPermanentPositions;
-
-        public String getCompanyName() {
-            return companyName;
-        }
-
-        public void setCompanyName(String companyName) {
-            this.companyName = companyName;
-        }
-
-        public int getTotalPositions() {
-            return totalPositions;
-        }
-
-        public void setTotalPositions(int totalPositions) {
-            this.totalPositions = totalPositions;
-        }
-
-        public int getTempPositions() {
-            return tempPositions;
-        }
-
-        public void setTempPositions(int tempPositions) {
-            this.tempPositions = tempPositions;
-        }
-
-        public int getPermanentPositions() {
-            return permanentPositions;
-        }
-
-        public void setPermanentPositions(int permanentPositions) {
-            this.permanentPositions = permanentPositions;
-        }
-
-        public int getRelevantPositions() {
-            return relevantPositions;
-        }
-
-        public void setRelevantPositions(int relevantPositions) {
-            this.relevantPositions = relevantPositions;
-        }
-
-        public int getRelevantTempPositions() {
-            return relevantTempPositions;
-        }
-
-        public void setRelevantTempPositions(int relevantTempPositions) {
-            this.relevantTempPositions = relevantTempPositions;
-        }
-
-        public int getRelevantPermanentPositions() {
-            return relevantPermanentPositions;
-        }
-
-        public void setRelevantPermanentPositions(int relevantPermanentPositions) {
-            this.relevantPermanentPositions = relevantPermanentPositions;
-        }
     }
 }
