@@ -137,7 +137,7 @@ public class CompanyController {
     }
 
     /**
-     * Utility class: Shows what inputs to addCompany should look like
+     * Utility class: Shows what inputs to addCompany should look like.
      */
     public static class CompanyInput {
         private String companyName;
@@ -147,5 +147,61 @@ public class CompanyController {
         private int relevantPositions;
         private int relevantTempPositions;
         private int relevantPermanentPositions;
+
+        public String getCompanyName() {
+            return companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
+        public int getTotalPositions() {
+            return totalPositions;
+        }
+
+        public void setTotalPositions(int totalPositions) {
+            this.totalPositions = totalPositions;
+        }
+
+        public int getTempPositions() {
+            return tempPositions;
+        }
+
+        public void setTempPositions(int tempPositions) {
+            this.tempPositions = tempPositions;
+        }
+
+        public int getPermanentPositions() {
+            return permanentPositions;
+        }
+
+        public void setPermanentPositions(int permanentPositions) {
+            this.permanentPositions = permanentPositions;
+        }
+
+        public int getRelevantPositions() {
+            return relevantPositions;
+        }
+
+        public void setRelevantPositions(int relevantPositions) {
+            this.relevantPositions = relevantPositions;
+        }
+
+        public int getRelevantTempPositions() {
+            return relevantTempPositions;
+        }
+
+        public void setRelevantTempPositions(int relevantTempPositions) {
+            this.relevantTempPositions = relevantTempPositions;
+        }
+
+        public int getRelevantPermanentPositions() {
+            return relevantPermanentPositions;
+        }
+
+        public void setRelevantPermanentPositions(int relevantPermanentPositions) {
+            this.relevantPermanentPositions = relevantPermanentPositions;
+        }
     }
 }
