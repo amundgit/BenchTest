@@ -87,6 +87,7 @@ public class CompanyController {
     @ApiOperation(value = "/add")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "testname",
+            dataType = "Company",
             examples = @io.swagger.annotations.Example(
                     value = {@ExampleProperty(value = "{'test1': 'test1', 'test2': 'test2'}", mediaType = "application/json")}
             ))
