@@ -87,10 +87,13 @@ public class CompanyController {
     @ApiOperation(value = "/add")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "body",
-            dataType = "CompanyInput")
+            dataType = "CompanyInput",
+                    examples = @io.swagger.annotations.Example(
+                            value = {
+                                    @ExampleProperty(value = "{ \"companyName\": \"TestCompany\", \"totalPositions\": \"120\", \"tempPositions\": \"70\", \"permanentPositions\": \"50\", \"relevantPositions\": \"20\", \"relevantTempPositions\": \"15\", \"relevantPermanentPositions\": \"5\" }", mediaType = "application/json")
+                            }))
     })
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
-        CompanyInput foo; //desperate test
         String returnString = "success";
         LocalDate currentDate = LocalDate.now();
         Date date = dateRepository.getByLocalDate(currentDate);
