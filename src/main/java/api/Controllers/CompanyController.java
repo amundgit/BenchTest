@@ -88,7 +88,7 @@ public class CompanyController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "testname",
             examples = @io.swagger.annotations.Example(
-                    value = {@ExampleProperty("{'test1': 'test1', 'test2': 'test2'}")}
+                    value = {@ExampleProperty(value = "{'test1': 'test1', 'test2': 'test2'}", mediaType = "application/json")}
             ))
     })
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
