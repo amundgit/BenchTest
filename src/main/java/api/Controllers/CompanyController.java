@@ -90,6 +90,7 @@ public class CompanyController {
             dataType = "CompanyInput")
     })
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
+        CompanyInput foo; //desperate test
         String returnString = "success";
         LocalDate currentDate = LocalDate.now();
         Date date = dateRepository.getByLocalDate(currentDate);
