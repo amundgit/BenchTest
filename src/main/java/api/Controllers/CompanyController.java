@@ -1,5 +1,9 @@
 package api.Controllers;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ExampleProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,6 +84,13 @@ public class CompanyController {
      * @return      Confirmation String
      */
     @PostMapping(path = "/add")
+    @ApiOperation(value = "/add")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "testname",
+            examples = @io.swagger.annotations.Example(
+                    value = {@ExampleProperty("{'test1': 'test1', 'test2': 'test2'}")}
+            ))
+    })
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
         String returnString = "success";
         LocalDate currentDate = LocalDate.now();
