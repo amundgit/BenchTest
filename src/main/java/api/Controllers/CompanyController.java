@@ -39,6 +39,16 @@ public class CompanyController {
     public @ResponseBody Iterable<Company> getAllCompanies(){return companyRepository.findAll();}
 
     /**
+     * Simple method to get all daily stored companies as JSON objects. Accessed by get call.
+     * @return      List of all daily stored companies as JSON objects
+     */
+    @GetMapping(path = "/getalldaily")
+    public @ResponseBody Iterable<Company> getAllCompaniesDaily(){
+        LocalDate current = LocalDate.now();
+        return companyRepository.getByDate(current);
+    }
+
+    /**
      * Simple method to get all stored companies for a given date as JSON objects. Accessed by get call
      * @param searchDate    String containing the search date, format YYYY-MM-DD
      * @return              List of all stored companies for the given date as JSON objects
