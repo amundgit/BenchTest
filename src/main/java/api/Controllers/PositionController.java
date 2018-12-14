@@ -41,6 +41,16 @@ public class PositionController {
     public @ResponseBody Iterable<Position> getAllPositions(){return positionRepository.findAll();}
 
     /**
+     * Simple method to get all daily stored positions as JSONs. Accessed by get call.
+     * @return      List of all stored positions as JSONs
+     */
+    @GetMapping(path = "/getalldaily")
+    public @ResponseBody Iterable<Position> getAllPositionsDaily(){
+        LocalDate current = LocalDate.now();
+        return positionRepository.getByDate(current);
+    }
+
+    /**
      * Method to get all stored positions in a given field as JSONs. Accessed by get call.
      * @param field String containing the field name.
      * @return      List of all stored positions in given field as JSONs
