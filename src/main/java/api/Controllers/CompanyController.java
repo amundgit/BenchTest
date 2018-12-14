@@ -94,7 +94,7 @@ public class CompanyController {
      * @return      Confirmation String
      */
     @PostMapping(path = "/add")
-    @ApiOperation(value = "/add",notes = "Does this appear anywhere?")
+    @ApiOperation(value = "Method to add a company with relevant data",notes = "Does this appear anywhere?")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "body",
             dataType = "Company")
