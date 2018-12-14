@@ -99,7 +99,7 @@ public class CompanyController {
      * @return      Confirmation String
      */
     @PostMapping(path = "/add")
-    @ApiOperation(value = "Method to add a company with relevant data",notes = "This should only reasonably be accessed by the crawlers")
+    @ApiOperation(value = "Method to add a company with relevant data",notes = "This should only reasonably be accessed by the crawlers. Structure of JSON in java file/javadoc and on Github")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "body",
             dataType = "Company")
@@ -130,7 +130,7 @@ public class CompanyController {
      * @return      Confirmation String
      */
     @PostMapping(path = "/addtest")
-    @ApiOperation(value = "DEBUG METHOD: Method to add a company with relevant data, on specified date",notes = "Should only be used for debugging, not in production")
+    @ApiOperation(value = "DEBUG METHOD: Method to add a company with relevant data, on specified date",notes = "Should only be used for debugging, not in production. Structure of JSON in java file/javadoc and on Github")
     public @ResponseBody String addCompanyTest(@RequestBody Map<String, Object> body){
         String returnString = "success";
         String dateArr[] = body.get("date").toString().split("-");
