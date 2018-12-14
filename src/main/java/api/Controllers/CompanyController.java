@@ -36,13 +36,15 @@ public class CompanyController {
      * @return      List of all stored companies as JSON objects
      */
     @GetMapping(path = "/getall")
+    @ApiOperation(value = "Get all stored companies as JSON objects",notes = "Takes no arguments")
     public @ResponseBody Iterable<Company> getAllCompanies(){return companyRepository.findAll();}
 
     /**
-     * Simple method to get all daily stored companies as JSON objects. Accessed by get call.
+     * Get all daily stored companies as JSON objects. Accessed by get call.
      * @return      List of all daily stored companies as JSON objects
      */
     @GetMapping(path = "/getalldaily")
+    @ApiOperation(value = "Simple method to get all daily stored companies as JSON objects",notes = "Takes no arguments")
     public @ResponseBody Iterable<Company> getAllCompaniesDaily(){
         LocalDate current = LocalDate.now();
         return companyRepository.getByDate(current);
@@ -54,6 +56,7 @@ public class CompanyController {
      * @return              List of all stored companies for the given date as JSON objects
      */
     @GetMapping(path = "/getbydate")
+    @ApiOperation(value = "Get all stored companies for a given date as JSON objects",notes = "Date should be a string of format YYYY-MM-DD")
     public @ResponseBody Iterable<Company> getCompaniesByDate(@RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
@@ -67,6 +70,7 @@ public class CompanyController {
      * @return              List of all stored companies for given name as JSON objects
      */
     @GetMapping(path = "getbyname")
+    @ApiOperation(value = "Get all stored companies for a given company name as JSON objects",notes = "Company name should be a string")
     public @ResponseBody Iterable<Company> getCompaniesByName(@RequestParam(name = "companyName")String companyName){
         return companyRepository.getByCompany(companyName);
     }
@@ -78,6 +82,7 @@ public class CompanyController {
      * @return              Company with given name and date, as JSON object
      */
     @GetMapping(path = "getbynameanddate")
+    @ApiOperation(value = "Get specific company by company name and date as JSON object",notes = "Date should be a string of format YYYY-MM-DD, company name plain string")
     public @ResponseBody Company getCompanyByNameAndDate(@RequestParam(name = "companyName")String companyName,@RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
@@ -94,7 +99,7 @@ public class CompanyController {
      * @return      Confirmation String
      */
     @PostMapping(path = "/add")
-    @ApiOperation(value = "Method to add a company with relevant data",notes = "Does this appear anywhere?")
+    @ApiOperation(value = "Method to add a company with relevant data",notes = "This should only reasonably be accessed by the crawlers")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "body",
             dataType = "Company")
@@ -125,6 +130,7 @@ public class CompanyController {
      * @return      Confirmation String
      */
     @PostMapping(path = "/addtest")
+    @ApiOperation(value = "DEBUG METHOD: Method to add a company with relevant data, on specified date",notes = "Should only be used for debugging, not in production")
     public @ResponseBody String addCompanyTest(@RequestBody Map<String, Object> body){
         String returnString = "success";
         String dateArr[] = body.get("date").toString().split("-");
