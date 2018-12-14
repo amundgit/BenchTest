@@ -139,7 +139,7 @@ public class PositionController {
      */
     @GetMapping(path = "/getbycompanyanddate")
     @ApiOperation(value = "Get all stored positions for a given company, on a given date, as JSONs",notes = "Takes companyName and searchDate as separate strings")
-    public @ResponseBody Iterable<Position> getPositionsByCompanyNameAndDate(@RequestParam(name = "companyName")String companyName, @RequestParam(name = "date")String searchDate){
+    public @ResponseBody Iterable<Position> getPositionsByCompanyNameAndDate(@RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
@@ -154,7 +154,7 @@ public class PositionController {
      */
     @GetMapping(path = "/getbyfieldanddate")
     @ApiOperation(value = "Get all stored positions for a given field, on a given date, as JSONs",notes = "Takes field and searchDate as separate strings")
-    public @ResponseBody Iterable<Position> getPositionsByFieldAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "date")String searchDate){
+    public @ResponseBody Iterable<Position> getPositionsByFieldAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
@@ -169,7 +169,7 @@ public class PositionController {
      */
     @GetMapping(path = "/getbydurationanddate")
     @ApiOperation(value = "Get all stored positions for a given duration, on a given date, as JSONs",notes = "Takes positionDuration and searchDate as separate strings")
-    public @ResponseBody Iterable<Position> getPositionsByDurationAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "date")String searchDate){
+    public @ResponseBody Iterable<Position> getPositionsByDurationAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
@@ -185,7 +185,7 @@ public class PositionController {
      */
     @GetMapping(path = "/getbyfieldandcompanyanddate")
     @ApiOperation(value = "Get all stored positions in a given field, for a given company, on a given date, as JSONs",notes = "Takes field, companyName and searchDate as separate strings")
-    public @ResponseBody Iterable<Position> getPositionsByFieldAndCompanyNameAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "date")String searchDate){
+    public @ResponseBody Iterable<Position> getPositionsByFieldAndCompanyNameAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
@@ -201,7 +201,7 @@ public class PositionController {
      */
     @GetMapping(path = "/getbyfieldanddurationanddate")
     @ApiOperation(value = "Get all stored positions in a given field, for a given company, on a given date, as JSONs",notes = "Takes field, positionDuration and searchDate as separate strings")
-    public @ResponseBody Iterable<Position> getPositionsByFieldAndDurationAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "date")String searchDate){
+    public @ResponseBody Iterable<Position> getPositionsByFieldAndDurationAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
@@ -217,7 +217,7 @@ public class PositionController {
      */
     @GetMapping(path = "/getbydurationandcompanyanddate")
     @ApiOperation(value = "Get all stored positions with a given duration, for a given company, on a given date, as JSONs",notes = "Takes positionDuration, companyName and searchDate as separate strings")
-    public @ResponseBody Iterable<Position> getPositionsByDurationAndCompanyNameAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "date")String searchDate){
+    public @ResponseBody Iterable<Position> getPositionsByDurationAndCompanyNameAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
         String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
