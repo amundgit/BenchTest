@@ -1,5 +1,6 @@
 package api.Controllers;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class DateController {
     DateRepository dateRepository;
 
     @GetMapping(path = "/getall")
+    @ApiOperation(value = "Get all stored dates as JSONs",notes = "Returns a list of JSONs, with date a string of format YYYY-MM-DD")
     public @ResponseBody Iterable<Date> getAllDates(){return dateRepository.findAll();}
 
     /**
@@ -32,6 +34,7 @@ public class DateController {
      * @return      Confirmation String
      */
     @GetMapping(path = "/create")
+    @ApiOperation(value = "Create an entry in the date table with today's date",notes = "Takes no argument, returns string confirming success.")
     public @ResponseBody String createDate(){
         String returnString = "success";
         Date currentDate = new Date();
@@ -45,6 +48,7 @@ public class DateController {
      * @return      Confirmation String
      */
     @PostMapping(path = "/testcreate")
+    @ApiOperation(value = "DEBUG METHOD: Allows creation of specified date",notes = "Only meant for debug use, hence \"cumbersome\" access through post with JSON containing date. JSON structure in Javadoc/on GitHub")
     public @ResponseBody String createTestDate(@RequestBody Map<String, Object> body){
         String returnString = "success";
         Date currentDate = new Date();
