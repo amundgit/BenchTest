@@ -18,6 +18,8 @@ import api.Pojos.*;
 
 import api.*;
 
+import java.time.YearMonth;
+import java.util.List;
 import java.util.Map;
 import java.time.LocalDate;
 
@@ -88,6 +90,25 @@ public class CompanyController {
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
         return companyRepository.getByCompanyAndDate(companyName,date);
+    }
+
+    @GetMapping(path = "/getrelevantpeakbymonthandcompany")
+    @ApiOperation(value = "Get the largest number of relevant positions in given month, for given company", notes = "Date should be given as YYYY-MM, company name plain string")
+    public @ResponseBody Integer getRelPeakByMonthAndCompany(@RequestParam(name = "searchDate")String searchDate, @RequestParam(name = "companyName")String companyName){
+        int result = 0;
+        YearMonth month = YearMonth.parse(searchDate);
+        LocalDate start = month.atDay(1);
+        LocalDate end = month.atEndOfMonth();
+        List<Integer> relevantPositions = companyRepository.getRelNoByCompanyAndPeriod(companyName,start,end);
+        for(Integer i : relevantPositions){
+            if(i>result){
+                result = i;
+            }
+        }
+        /*String dateArr[] = searchDate.split("-");
+        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
+                Integer.parseInt(dateArr[2]));*/
+        return result;
     }
 
     /**

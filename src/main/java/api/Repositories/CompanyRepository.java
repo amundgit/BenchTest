@@ -18,4 +18,7 @@ public interface CompanyRepository extends CrudRepository<Company, String> {
 
     @Query("SELECT c FROM Company c WHERE company = :id AND date_collected = :date")
     Company getByCompanyAndDate(@Param("id") String id, @Param("date") LocalDate date);
+
+    @Query("SELECT c.relevantPositions FROM Company c WHERE company = :id AND date_collected >= :startDate AND date_collected <= endDate")
+    List<Integer> getRelNoByCompanyAndPeriod(@Param("id") String id, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }
