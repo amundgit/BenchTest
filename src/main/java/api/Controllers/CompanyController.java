@@ -171,10 +171,13 @@ public class CompanyController {
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
         String returnString = "success";
         LocalDate currentDate = LocalDate.now();
+        Date date = new Date();
         try {
-            Date date = dateRepository.getByLocalDate(currentDate);
+            date = dateRepository.getByLocalDate(currentDate);
         } catch (SQLException s) {
             System.out.println("SQL Error");
+            returnString = "failure";
+            return returnString;
         } catch (Exception e) {
             System.out.println("Generic error");
         }
