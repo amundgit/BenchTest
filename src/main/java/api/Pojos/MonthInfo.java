@@ -14,7 +14,7 @@ public class MonthInfo {
         this.name = name;
     }
 
-    public String getX() {
+    public String getMonth() {
         return month;
     }
 
@@ -22,7 +22,7 @@ public class MonthInfo {
         this.month = month;
     }
 
-    public int getY() {
+    public int getValue() {
         return value;
     }
 
