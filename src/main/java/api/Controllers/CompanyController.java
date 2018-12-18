@@ -18,6 +18,7 @@ import api.Pojos.*;
 
 import api.*;
 
+import java.sql.SQLException;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -170,7 +171,13 @@ public class CompanyController {
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
         String returnString = "success";
         LocalDate currentDate = LocalDate.now();
-        Date date = dateRepository.getByLocalDate(currentDate);
+        try {
+            Date date = dateRepository.getByLocalDate(currentDate);
+        } catch (SQLException s) {
+            System.out.println("SQL Error");
+        } catch (Exception e) {
+            System.out.println("Generic error");
+        }
         String companyName = body.get("companyName").toString();
         int totalPositions = Integer.parseInt(body.get("totalPositions").toString());
         int tempPositions = Integer.parseInt(body.get("tempPositions").toString());
