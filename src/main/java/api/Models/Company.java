@@ -45,6 +45,10 @@ public class Company {
         return companyId;
     }
 
+    public String getCompanyName() {return companyId.getCompany();}
+
+    public Date getDate() {return companyId.getDate();}
+
     public void setCompanyId(CompanyId companyId){
         this.companyId = companyId;
     }
