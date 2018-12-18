@@ -210,6 +210,7 @@ public class CompanyController {
         Date date = dateRepository.getByLocalDate(currentDate);
         if(date == null){
             date = new Date();
+            date.setDate(currentDate);
             date = dateRepository.save(date);
         }
         String companyName = body.get("companyName").toString();
