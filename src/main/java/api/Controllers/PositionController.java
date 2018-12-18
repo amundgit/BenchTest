@@ -34,6 +34,18 @@ public class PositionController {
 
 
     //BASIC QUERIES
+
+    /**
+     * Simple method to get a stored position by its id. Accessed by get call
+     * @param id    Id as Integer value
+     * @return      Position with corresponding id as JSON
+     */
+    @GetMapping(path = "/getbyid")
+    @ApiOperation(value = "Simple method to get a stored position by its id", notes = "Mostly for completion. Id should be an integer")
+    public @ResponseBody Position getById(@RequestParam(name = "id")Integer id){
+        return positionRepository.getById(id);
+    }
+
     /**
      * Simple method to get all stored positions as JSONs. Accessed by get call.
      * @return      List of all stored positions as JSONs
