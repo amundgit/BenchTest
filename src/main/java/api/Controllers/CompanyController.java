@@ -1,5 +1,6 @@
 package api.Controllers;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -171,15 +172,13 @@ public class CompanyController {
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
         String returnString = "success";
         LocalDate currentDate = LocalDate.now();
-        Date date = new Date();
+        Date date;
         try {
             date = dateRepository.getByLocalDate(currentDate);
-        } catch (SQLException s) {
-            System.out.println("SQL Error");
-            returnString = "failure";
-            return returnString;
         } catch (Exception e) {
             System.out.println("Generic error");
+            returnString = "failure";
+            return returnString;
         }
         String companyName = body.get("companyName").toString();
         int totalPositions = Integer.parseInt(body.get("totalPositions").toString());
