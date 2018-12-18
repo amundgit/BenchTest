@@ -71,7 +71,7 @@ public class Position {
     }*/
 
     public String getCompanyName(){
-        return company.getCompanyId().getCompany();
+        return company.getCompanyName();
     }
 
     public void setCompany(Company company) {
