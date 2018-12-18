@@ -11,7 +11,7 @@ public class MonthInfo {
     public MonthInfo(String month, int value, String name){
         this.month = month;
         this.value = value;
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     public String getMonth() {
