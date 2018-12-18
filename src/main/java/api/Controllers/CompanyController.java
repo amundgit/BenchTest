@@ -72,6 +72,21 @@ public class CompanyController {
     }
 
     /**
+     * Get all stored data for given company in a given month as JSON objects. Accessed by get call.
+     * @param companyName   String containing company name
+     * @param searchDate    String containing the search date, format YYYY-MM
+     * @return      List of all daily stored companies as JSON objects
+     */
+    @GetMapping(path = "/getmonthlybyname")
+    @ApiOperation(value = "Get all stored data for given company in a given month as JSON objects",notes = "Date should be a string of format YYYY-MM, companyName should contain the name of the company")
+    public @ResponseBody Iterable<Company> getMonthlyByName(@RequestParam(name = "companyName")String companyName,@RequestParam(name = "searchDate")String searchDate){
+        YearMonth month = YearMonth.parse(searchDate);
+        LocalDate start = month.atDay(1);
+        LocalDate end = month.atEndOfMonth();
+        return companyRepository.getByCompanyAndPeriod(companyName,start,end);
+    }
+
+    /**
      * Simple method to get all stored companies for a given date as JSON objects. Accessed by get call
      * @param searchDate    String containing the search date, format YYYY-MM-DD
      * @return              List of all stored companies for the given date as JSON objects
