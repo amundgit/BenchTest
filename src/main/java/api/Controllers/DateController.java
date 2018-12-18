@@ -31,10 +31,11 @@ public class DateController {
 
     /**
      * Creates an entry in the date table with today's date. Returns string to confirm successful creation
+     * Should not really be necessary, as date is generated when first company of the day is added.
      * @return      Confirmation String
      */
     @GetMapping(path = "/create")
-    @ApiOperation(value = "Create an entry in the date table with today's date",notes = "Takes no argument, returns string confirming success.")
+    @ApiOperation(value = "Create an entry in the date table with today's date",notes = "Takes no argument, returns string confirming success.Should not be necessary, as date is generated when first company of the day is added.")
     public @ResponseBody String createDate(){
         String returnString = "success";
         Date currentDate = new Date();
@@ -44,11 +45,12 @@ public class DateController {
 
     /**
      * DEBUG METHOD: Allows creation of specified date. Only meant for debug use, hence "cumbersome" access through post with JSON containing date.
+     * Should not really be necessary, as date is generated when first company of the day is added.
      * @param body  JSON object containing a date as string, variable name date
      * @return      Confirmation String
      */
     @PostMapping(path = "/testcreate")
-    @ApiOperation(value = "DEBUG METHOD: Allows creation of specified date",notes = "Only meant for debug use, hence \"cumbersome\" access through post with JSON containing date. JSON structure in Javadoc/on GitHub")
+    @ApiOperation(value = "DEBUG METHOD: Allows creation of specified date",notes = "Only meant for debug use, hence \"cumbersome\" access through post with JSON containing date. Should not be necessary, as date is generated when first company of the day is added. JSON structure in Javadoc/on GitHub")
     public @ResponseBody String createTestDate(@RequestBody Map<String, Object> body){
         String returnString = "success";
         Date currentDate = new Date();
