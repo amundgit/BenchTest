@@ -148,7 +148,7 @@ public class CompanyController {
                     temp = j;
                 }
             }
-            result.add(new MonthInfo(month.getMonth().name(),temp));
+            result.add(new MonthInfo(month.getMonth().name(),temp,companyName));
         }
         return result;
     }

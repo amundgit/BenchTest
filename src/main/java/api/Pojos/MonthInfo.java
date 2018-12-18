@@ -2,29 +2,39 @@ package api.Pojos;
 
 //Generic object to allow users to return a month and some related value
 public class MonthInfo {
-    private String x;
-    private int y;
+    private String month;
+    private int value;
+    private String name;
 
     public MonthInfo(){}
 
-    public MonthInfo(String month, int value){
-        this.x = month;
-        this.y = value;
+    public MonthInfo(String month, int value, String name){
+        this.month = month;
+        this.value = value;
+        this.name = name;
     }
 
     public String getX() {
-        return x;
+        return month;
     }
 
     public void setMonth(String month) {
-        this.x = month;
+        this.month = month;
     }
 
     public int getY() {
-        return y;
+        return value;
     }
 
     public void setValue(int value) {
-        this.y = value;
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
