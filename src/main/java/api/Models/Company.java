@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import api.CompositeIds.CompanyId;
 
+import java.time.LocalDate;
+
 @Entity
 public class Company {
     @EmbeddedId
@@ -47,7 +49,7 @@ public class Company {
 
     public String getCompanyName() {return companyId.getCompany();}
 
-    public Date getDate() {return companyId.getDate();}
+    public LocalDate getDate() {return companyId.getDate().getDate();}
 
     public void setCompanyId(CompanyId companyId){
         this.companyId = companyId;
