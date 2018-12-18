@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ExampleProperty;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -175,7 +176,7 @@ public class CompanyController {
         Date date;
         try {
             date = dateRepository.getByLocalDate(currentDate);
-        } catch (Exception e) {
+        } catch (ConstraintViolationException e) {
             System.out.println("Generic error");
             returnString = "failure";
             return returnString;
