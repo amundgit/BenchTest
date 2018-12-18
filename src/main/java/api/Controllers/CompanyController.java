@@ -19,6 +19,7 @@ import api.Pojos.*;
 import api.*;
 
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.time.LocalDate;
@@ -92,6 +93,12 @@ public class CompanyController {
         return companyRepository.getByCompanyAndDate(companyName,date);
     }
 
+    /**
+     * Method to get highest number of relevant positions for a given company in a given month
+     * @param searchDate    String containing search date, format YYYY-MM
+     * @param companyName   String containing  company name
+     * @return              Highest number of relevant positions as integer
+     */
     @GetMapping(path = "/getrelevantpeakbymonthandcompany")
     @ApiOperation(value = "Get the largest number of relevant positions in given month, for given company", notes = "Date should be given as YYYY-MM, company name plain string")
     public @ResponseBody Integer getRelPeakByMonthAndCompany(@RequestParam(name = "searchDate")String searchDate, @RequestParam(name = "companyName")String companyName){
@@ -100,14 +107,49 @@ public class CompanyController {
         LocalDate start = month.atDay(1);
         LocalDate end = month.atEndOfMonth();
         List<Integer> relevantPositions = companyRepository.getRelNoByCompanyAndPeriod(companyName,start,end);
-        for(Integer i : relevantPositions){
-            if(i>result){
+        for(Integer i : relevantPositions) {
+            if (i > result) {
                 result = i;
             }
         }
-        /*String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));*/
+        return result;
+    }
+
+    /**
+     *  Method to get a list of highest number of relevant positions per month, for a given company.
+     * @param searchDate    int containing search year
+     * @param companyName   String containing company name
+     * @return              List of each month's highest number of relevant positions, as JSON
+     */
+    @GetMapping(path = "/getrelevantpeaksbyyearandcompany")
+    @ApiOperation(value = "Get list of highest number of relevant positions per month, for given company in given year", notes = "Date should be year as int, company name plain string")
+    public @ResponseBody Iterable<MonthInfo> getRelPeaksByYearAndCompany(@RequestParam(name = "searchDate")int searchDate, @RequestParam(name = "companyName")String companyName){
+        List<MonthInfo> result = new ArrayList<>();
+        YearMonth current = YearMonth.now();
+        int countTo;
+        if(current.getYear() == searchDate){
+            //If we are checking this year, only go up to current month
+            countTo = current.getMonthValue();
+        } else if (current.getYear() < searchDate){
+            //Check if trying to see the future
+            countTo = -1;
+        } else {
+            //If we are checking a previous year, get all months
+            countTo = 12;
+        }
+        for(int i=1;i<=countTo;i++){
+            YearMonth month = YearMonth.of(searchDate,i);
+            LocalDate start = month.atDay(1);
+            LocalDate end = month.atEndOfMonth();
+            List<Integer> relevantPositions = companyRepository.getRelNoByCompanyAndPeriod(companyName,start,end);
+            int temp = 0;
+            for(Integer j : relevantPositions) {
+                if (j > temp) {
+                    temp = j;
+                }
+            }
+            result.add(new MonthInfo(month.getMonth().name(),temp));
+        }
         return result;
     }
 
