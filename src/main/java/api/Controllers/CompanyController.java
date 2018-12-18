@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ExampleProperty;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -173,13 +174,10 @@ public class CompanyController {
     public @ResponseBody String addCompany(@RequestBody Map<String, Object> body){
         String returnString = "success";
         LocalDate currentDate = LocalDate.now();
-        Date date;
-        try {
-            date = dateRepository.getByLocalDate(currentDate);
-        } catch (ConstraintViolationException e) {
-            System.out.println("Generic error");
-            returnString = "failure";
-            return returnString;
+        Date date = dateRepository.getByLocalDate(currentDate);
+        if(date == null){
+            date = new Date();
+            date = dateRepository.save(date);
         }
         String companyName = body.get("companyName").toString();
         int totalPositions = Integer.parseInt(body.get("totalPositions").toString());
