@@ -12,7 +12,7 @@ public class MonthInfo {
         this.y = value;
     }
 
-    public String getMonth() {
+    public String getX() {
         return x;
     }
 
@@ -20,7 +20,7 @@ public class MonthInfo {
         this.x = month;
     }
 
-    public int getValue() {
+    public int getY() {
         return y;
     }
 
