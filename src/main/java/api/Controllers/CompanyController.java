@@ -208,6 +208,10 @@ public class CompanyController {
         LocalDate currentDate = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
         Date date = dateRepository.getByLocalDate(currentDate);
+        if(date == null){
+            date = new Date();
+            date = dateRepository.save(date);
+        }
         String companyName = body.get("companyName").toString();
         int totalPositions = Integer.parseInt(body.get("totalPositions").toString());
         int tempPositions = Integer.parseInt(body.get("tempPositions").toString());
