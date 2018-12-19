@@ -1,13 +1,9 @@
 package api.Controllers;
 
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ExampleProperty;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +15,6 @@ import api.Repositories.*;
 import api.Models.*;
 import api.Pojos.*;
 
-import api.*;
-
-import java.sql.SQLException;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
