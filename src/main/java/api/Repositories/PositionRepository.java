@@ -58,6 +58,15 @@ public interface PositionRepository extends CrudRepository<Position, Integer>{
     @Query("SELECT p FROM Position p WHERE date_collected >= :startDate AND date_collected <= :endDate")
     List<Position> getByPeriod(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+    @Query("SELECT p FROM Position p WHERE company_name = :companyName AND date_collected >= :startDate AND date_collected <= :endDate")
+    List<Position> getByCompanyNameAndPeriod(@Param("companyName") String companyName, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT p FROM Position p WHERE field = :field AND date_collected >= :startDate AND date_collected <= :endDate")
+    List<Position> getByFieldAndPeriod(@Param("field") String field, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT p FROM Position p WHERE position_duration = :positionDuration AND date_collected >= :startDate AND date_collected <= :endDate")
+    List<Position> getByDurationAndPeriod(@Param("positionDuration") String positionDuration, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
     //BASIC COUNT QUERIES
     @Query("SELECT p.noOfPositions FROM Position p WHERE company_name = :companyName")
     List<Integer> countByCompanyName(@Param("companyName") String companyName);

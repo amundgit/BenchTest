@@ -252,6 +252,51 @@ public class PositionController {
         return positionRepository.getByPeriod(start,end);
     }
 
+    /**
+     * Method to get all stored positions for a given company, in a given month, as JSONs. Accessed by get call.
+     * @param companyName   String containing company name
+     * @param searchDate    String containing the search date, format YYYY-MM
+     * @return              List of all stored positions in given month
+     */
+    @GetMapping(path = "/getmonthlybycompany")
+    @ApiOperation(value = "Get all stored positions for a given company, in a given month", notes = "searchDate should be a string containing the search date, format YYYY-MM")
+    public @ResponseBody Iterable<Position> getMonthlyByCompany(@RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
+        YearMonth month = YearMonth.parse(searchDate);
+        LocalDate start = month.atDay(1);
+        LocalDate end = month.atEndOfMonth();
+        return positionRepository.getByCompanyNameAndPeriod(companyName,start,end);
+    }
+
+    /**
+     * Method to get all stored positions in a given field, in a given month, as JSONs. Accessed by get call.
+     * @param field         String containing the field
+     * @param searchDate    String containing the search date, format YYYY-MM
+     * @return              List of all stored positions in given month
+     */
+    @GetMapping(path = "/getmonthlybyfield")
+    @ApiOperation(value = "Get all stored positions in a given field, in a given month", notes = "searchDate should be a string containing the search date, format YYYY-MM")
+    public @ResponseBody Iterable<Position> getMonthlyByField(@RequestParam(name = "field")String field, @RequestParam(name = "searchDate")String searchDate){
+        YearMonth month = YearMonth.parse(searchDate);
+        LocalDate start = month.atDay(1);
+        LocalDate end = month.atEndOfMonth();
+        return positionRepository.getByFieldAndPeriod(field,start,end);
+    }
+
+    /**
+     * Method to get all stored positions with a given duration, in a given month, as JSONs. Accessed by get call.
+     * @param positionDuration  String containing the position duration (temporary/permanent or similar)
+     * @param searchDate        String containing the search date, format YYYY-MM
+     * @return                  List of all stored positions in given month
+     */
+    @GetMapping(path = "/getmonthlybyduration")
+    @ApiOperation(value = "Get all stored positions with a given duration, in a given month", notes = "searchDate should be a string containing the search date, format YYYY-MM")
+    public @ResponseBody Iterable<Position> getMonthlyByDuration(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "searchDate")String searchDate){
+        YearMonth month = YearMonth.parse(searchDate);
+        LocalDate start = month.atDay(1);
+        LocalDate end = month.atEndOfMonth();
+        return positionRepository.getByDurationAndPeriod(positionDuration,start,end);
+    }
+
     //BASIC COUNT QUERIES
 
     /**
