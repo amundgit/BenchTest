@@ -16,6 +16,7 @@ import api.Pojos.*;
 import api.*;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 
@@ -234,6 +235,21 @@ public class PositionController {
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
                 Integer.parseInt(dateArr[2]));
         return positionRepository.getByDurationAndCompanyNameAndDate(positionDuration, companyName, date);
+    }
+    //BASIC QUERIES WITH PERIOD
+
+    /**
+     * Method to get all stored positions in a given month as JSONs. Accessed by get call.
+     * @param searchDate    String containing the search date, format YYYY-MM
+     * @return              List of all stored positions in given month
+     */
+    @GetMapping(path = "/getallmonthly")
+    @ApiOperation(value = "Get all stored positions in a given month", notes = "searchDate should be a string containing the search date, format YYYY-MM")
+    public @ResponseBody Iterable<Position> getAllMonthly(@RequestParam(name = "searchDate")String searchDate){
+        YearMonth month = YearMonth.parse(searchDate);
+        LocalDate start = month.atDay(1);
+        LocalDate end = month.atEndOfMonth();
+        return positionRepository.getByPeriod(start,end);
     }
 
     //BASIC COUNT QUERIES
