@@ -101,9 +101,10 @@ public class PositionController {
     @GetMapping(path = "/getbydate")
     @ApiOperation(value = "Get all stored positions for a given date as JSONs",notes = "Date should be a string of format YYYY-MM-DD")
     public @ResponseBody Iterable<Position> getPositionsByDate(@RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
+        /*String dateArr[] = searchDate.split("-");
         LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+                Integer.parseInt(dateArr[2]));*/
+        LocalDate date = LocalDate.parse(searchDate);
         return positionRepository.getByDate(date);
     }
 
