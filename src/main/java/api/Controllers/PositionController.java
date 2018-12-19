@@ -101,9 +101,6 @@ public class PositionController {
     @GetMapping(path = "/getbydate")
     @ApiOperation(value = "Get all stored positions for a given date as JSONs",notes = "Date should be a string of format YYYY-MM-DD")
     public @ResponseBody Iterable<Position> getPositionsByDate(@RequestParam(name = "searchDate")String searchDate){
-        /*String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));*/
         LocalDate date = LocalDate.parse(searchDate);
         return positionRepository.getByDate(date);
     }
@@ -154,9 +151,7 @@ public class PositionController {
     @GetMapping(path = "/getbycompanyanddate")
     @ApiOperation(value = "Get all stored positions for a given company, on a given date, as JSONs",notes = "Takes companyName and searchDate as separate strings")
     public @ResponseBody Iterable<Position> getPositionsByCompanyNameAndDate(@RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         return positionRepository.getByCompanyNameAndDate(companyName, date);
     }
 
@@ -169,9 +164,7 @@ public class PositionController {
     @GetMapping(path = "/getbyfieldanddate")
     @ApiOperation(value = "Get all stored positions for a given field, on a given date, as JSONs",notes = "Takes field and searchDate as separate strings")
     public @ResponseBody Iterable<Position> getPositionsByFieldAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         return positionRepository.getByFieldAndDate(field, date);
     }
 
@@ -184,9 +177,7 @@ public class PositionController {
     @GetMapping(path = "/getbydurationanddate")
     @ApiOperation(value = "Get all stored positions for a given duration, on a given date, as JSONs",notes = "Takes positionDuration and searchDate as separate strings")
     public @ResponseBody Iterable<Position> getPositionsByDurationAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         return positionRepository.getByDurationAndDate(positionDuration, date);
     }
 
@@ -200,9 +191,7 @@ public class PositionController {
     @GetMapping(path = "/getbyfieldandcompanyanddate")
     @ApiOperation(value = "Get all stored positions in a given field, for a given company, on a given date, as JSONs",notes = "Takes field, companyName and searchDate as separate strings")
     public @ResponseBody Iterable<Position> getPositionsByFieldAndCompanyNameAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         return positionRepository.getByFieldAndCompanyNameAndDate(field, companyName, date);
     }
 
@@ -216,9 +205,7 @@ public class PositionController {
     @GetMapping(path = "/getbyfieldanddurationanddate")
     @ApiOperation(value = "Get all stored positions in a given field, for a given company, on a given date, as JSONs",notes = "Takes field, positionDuration and searchDate as separate strings")
     public @ResponseBody Iterable<Position> getPositionsByFieldAndDurationAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         return positionRepository.getByFieldAndDurationAndDate(field, positionDuration, date);
     }
 
@@ -232,9 +219,7 @@ public class PositionController {
     @GetMapping(path = "/getbydurationandcompanyanddate")
     @ApiOperation(value = "Get all stored positions with a given duration, for a given company, on a given date, as JSONs",notes = "Takes positionDuration, companyName and searchDate as separate strings")
     public @ResponseBody Iterable<Position> getPositionsByDurationAndCompanyNameAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         return positionRepository.getByDurationAndCompanyNameAndDate(positionDuration, companyName, date);
     }
     //BASIC QUERIES WITH PERIOD
@@ -409,9 +394,7 @@ public class PositionController {
     @GetMapping(path = "/countbycompanyanddate")
     @ApiOperation(value = "Count the number of positions from a given company, on a given date",notes = "Takes companyName and searchDate as separate strings")
     public @ResponseBody Integer countPositionsByCompanyNameAndDate(@RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         List<Integer> list= positionRepository.countByCompanyNameAndDate(companyName,date);
         int count = 0;
         for(Integer i : list){
@@ -429,9 +412,7 @@ public class PositionController {
     @GetMapping(path = "/countbyfieldanddate")
     @ApiOperation(value = "Count the number of positions in a given field, on a given date",notes = "Takes field and searchDate as separate strings")
     public @ResponseBody Integer countPositionsByFieldAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         List<Integer> list= positionRepository.countByFieldAndDate(field,date);
         int count = 0;
         for(Integer i : list){
@@ -449,9 +430,7 @@ public class PositionController {
     @GetMapping(path = "/countbydurationanddate")
     @ApiOperation(value = "Count the number of positions with a given duration, on a given date",notes = "Takes positionDuration and searchDate as separate strings")
     public @ResponseBody Integer countPositionsByDurationAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         List<Integer> list= positionRepository.countByDurationAndDate(positionDuration,date);
         int count = 0;
         for(Integer i : list){
@@ -470,9 +449,7 @@ public class PositionController {
     @GetMapping(path = "/countbyfieldandcompanyanddate")
     @ApiOperation(value = "Ccount the number of positions in a given field, from a given company, on a given date",notes = "Takes field, companyName and searchDate as separate strings")
     public @ResponseBody Integer countPositionsByFieldAndCompanyNameAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         List<Integer> list= positionRepository.countByFieldAndCompanyNameAndDate(field, companyName, date);
         int count = 0;
         for(Integer i : list){
@@ -491,9 +468,7 @@ public class PositionController {
     @GetMapping(path = "/countbyfieldanddurationanddate")
     @ApiOperation(value = "Count the number of positions in a given field, with a given duration, on a given date",notes = "Takes field, positionDuration and searchDate as separate strings")
     public @ResponseBody Integer countPositionsByFieldAndDurationAndDate(@RequestParam(name = "field")String field, @RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         List<Integer> list= positionRepository.countByFieldAndDurationAndDate(field, positionDuration, date);
         int count = 0;
         for(Integer i : list){
@@ -512,9 +487,7 @@ public class PositionController {
     @GetMapping(path = "/countbydurationandcompanyanddate")
     @ApiOperation(value = "Count the number of positions with a given duration, from a given company, on a given date",notes = "Takes positionDuration, companyName and searchDate as separate strings")
     public @ResponseBody Integer countPositionsByDurationAndCompanyNameAndDate(@RequestParam(name = "positionDuration")String positionDuration, @RequestParam(name = "companyName")String companyName, @RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         List<Integer> list= positionRepository.countByDurationAndCompanyNameAndDate(positionDuration, companyName, date);
         int count = 0;
         for(Integer i : list){
@@ -603,9 +576,7 @@ public class PositionController {
     @ApiOperation(value = "DEBUG METHOD: Method to add a position with relevant data, on specified date",notes = "Should only be used for debugging, not in production. Structure of JSON in java file/javadoc and on Github")
     public @ResponseBody String addPositionTest(@RequestBody Map<String, Object> body){
         String returnString = "success";
-        String dateArr[] = body.get("date").toString().split("-");
-        LocalDate currentDate = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate currentDate = LocalDate.parse(body.get("date").toString());
         String companyName = body.get("companyName").toString();
         String positionDuration = body.get("positionDuration").toString();
         String positionName = body.get("positionName").toString();

@@ -94,9 +94,7 @@ public class CompanyController {
     @GetMapping(path = "/getbydate")
     @ApiOperation(value = "Get all stored companies for a given date as JSON objects",notes = "Date should be a string of format YYYY-MM-DD")
     public @ResponseBody Iterable<Company> getCompaniesByDate(@RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         return companyRepository.getByDate(date);
     }
 
@@ -120,9 +118,7 @@ public class CompanyController {
     @GetMapping(path = "getbynameanddate")
     @ApiOperation(value = "Get specific company by company name and date as JSON object",notes = "Date should be a string of format YYYY-MM-DD, company name plain string")
     public @ResponseBody Company getCompanyByNameAndDate(@RequestParam(name = "companyName")String companyName,@RequestParam(name = "searchDate")String searchDate){
-        String dateArr[] = searchDate.split("-");
-        LocalDate date = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate date = LocalDate.parse(searchDate);
         return companyRepository.getByCompanyAndDate(companyName,date);
     }
 
@@ -233,9 +229,7 @@ public class CompanyController {
     @ApiOperation(value = "DEBUG METHOD: Method to add a company with relevant data, on specified date",notes = "Should only be used for debugging, not in production. Structure of JSON in java file/javadoc and on Github")
     public @ResponseBody String addCompanyTest(@RequestBody Map<String, Object> body){
         String returnString = "success";
-        String dateArr[] = body.get("date").toString().split("-");
-        LocalDate currentDate = LocalDate.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-                Integer.parseInt(dateArr[2]));
+        LocalDate currentDate = LocalDate.parse(body.get("date").toString());
         Date date = dateRepository.getByLocalDate(currentDate);
         if(date == null){
             date = new Date();
