@@ -149,26 +149,10 @@ public class CompanyController {
     @GetMapping(path = "/getallpeaksbymonthandcompany")
     @ApiOperation(value = "Get the largest number of relevant positions in given month, for given company", notes = "Date should be given as YYYY-MM, company name plain string")
     public @ResponseBody PeakInfo getAllPeaksByMonthAndCompany(@RequestParam(name = "searchDate")String searchDate, @RequestParam(name = "companyName")String companyName){
-        PeakInfo result = new PeakInfo();
         YearMonth month = YearMonth.parse(searchDate);
         LocalDate start = month.atDay(1);
         LocalDate end = month.atEndOfMonth();
-        List<Company> companies = companyRepository.getByCompanyAndPeriod(companyName,start,end);
-        result.setItPositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"IT",start,end,positionRepository));
-        result.setFinancePositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"Finance",start,end,positionRepository));
-        result.setExecutivePositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"Executive",start,end,positionRepository));
-        result.setEngineeringPositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"Engineering",start,end,positionRepository));
-        for(Company c : companies){
-            if(c.getTotalPositions() > result.getTotalPositions()){result.setTotalPositions(c.getTotalPositions());}
-            if(c.getTempPositions() > result.getTempPositions()){result.setTempPositions(c.getTempPositions());}
-            if(c.getPermanentPositions() > result.getPermanentPositions()){result.setPermanentPositions(c.getPermanentPositions());}
-            if(c.getRelevantPositions() > result.getRelevantPositions()){result.setRelevantPositions(c.getRelevantPositions());}
-            if(c.getRelevantTempPositions() > result.getRelevantTempPositions()){result.setRelevantTempPositions(c.getRelevantTempPositions());}
-            if(c.getRelevantPermanentPositions() > result.getRelevantPermanentPositions()){result.setRelevantPermanentPositions(c.getRelevantPermanentPositions());}
-        }
-        result.setCompanyName(companyName);
-        result.setMonth(month.getMonth().name());
-        return result;
+        return getPeaksByCompanyAndPeriod(companyName,start,end);
     }
 
     /**
@@ -273,5 +257,35 @@ public class CompanyController {
         Company newCompany = new Company(companyName, date, totalPositions, tempPositions, permanentPositions, relevantPositions, relevantTempPositions, relevantPermanentPositions);
         companyRepository.save(newCompany);
         return returnString;
+    }
+
+    //SIMPLE, UNMAPPED UTILITY METHODS
+
+    /**
+     * Gets all peak values for a given company within a given period. IMPORTANT: To avoid confusion, start and end should be in the same calendar month.
+     * If start and end are not in the same month, the month field of the PeakInfo will simply be the month of the start date.
+     * @param companyName   String containing company name
+     * @param start         LocalDate object with start date (SHOULD BE IN SAME CALENDAR MONTH AS END)
+     * @param end           LocalDate object with end date (SHOULD BE IN SAME CALENDAR MONTH AS START)
+     * @return              PeakInfo object containing all peak values
+     */
+    public PeakInfo getPeaksByCompanyAndPeriod(String companyName, LocalDate start, LocalDate end){
+        PeakInfo result = new PeakInfo();
+        List<Company> companies = companyRepository.getByCompanyAndPeriod(companyName,start,end);
+        result.setItPositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"IT",start,end,positionRepository));
+        result.setFinancePositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"Finance",start,end,positionRepository));
+        result.setExecutivePositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"Executive",start,end,positionRepository));
+        result.setEngineeringPositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"Engineering",start,end,positionRepository));
+        for(Company c : companies){
+            if(c.getTotalPositions() > result.getTotalPositions()){result.setTotalPositions(c.getTotalPositions());}
+            if(c.getTempPositions() > result.getTempPositions()){result.setTempPositions(c.getTempPositions());}
+            if(c.getPermanentPositions() > result.getPermanentPositions()){result.setPermanentPositions(c.getPermanentPositions());}
+            if(c.getRelevantPositions() > result.getRelevantPositions()){result.setRelevantPositions(c.getRelevantPositions());}
+            if(c.getRelevantTempPositions() > result.getRelevantTempPositions()){result.setRelevantTempPositions(c.getRelevantTempPositions());}
+            if(c.getRelevantPermanentPositions() > result.getRelevantPermanentPositions()){result.setRelevantPermanentPositions(c.getRelevantPermanentPositions());}
+        }
+        result.setCompanyName(companyName);
+        result.setMonth(start.getMonth().name());
+        return result;
     }
 }
