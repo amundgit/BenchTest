@@ -610,12 +610,10 @@ public class PositionController {
 
     //SIMPLE, UNMAPPED UTILITY METHODS
     public static Integer getPeakByCompanyAndFieldAndPeriod(String companyName, String field, LocalDate start, LocalDate end, PositionRepository positionRepository){
-        System.out.println(start.toString());
-        System.out.println(end.toString());
         LocalDate date = start;
         int peak = 0;
         //Loop through the month:
-        while(date.isBefore(end) || date.isAfter(start) || date.isEqual(start) || date.isEqual(end)){
+        while((date.isBefore(end) && date.isAfter(start)) || date.isEqual(start) || date.isEqual(end)){
             int sum = 0;
             List<Integer> numList = positionRepository.countByFieldAndCompanyNameAndDate(field,companyName,date);
             for(Integer i : numList){
@@ -625,15 +623,6 @@ public class PositionController {
                 peak = sum;
             }
             date = date.plusDays(1);
-            if(date.isBefore(end)) {
-                System.out.println("Before end true");
-            }
-            if(date.isAfter(start)){
-                System.out.println("After start true");
-            }
-            if(date.isEqual(start)){System.out.println("Equal to start");}
-            if(date.isEqual(end)){System.out.println("Equal to end");}
-            System.out.println(date.toString());
         }
 
         return peak;
