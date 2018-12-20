@@ -623,6 +623,7 @@ public class PositionController {
                 peak = sum;
             }
             date = date.plusDays(1);
+            System.out.println(date.toString());
         }
 
         return peak;
