@@ -154,7 +154,18 @@ public class CompanyController {
         LocalDate start = month.atDay(1);
         LocalDate end = month.atEndOfMonth();
         List<Company> companies = companyRepository.getByCompanyAndPeriod(companyName,start,end);
-        result.setITPositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"IT",start,end,positionRepository));
+        result.setItPositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"IT",start,end,positionRepository));
+        result.setFinancePositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"Finance",start,end,positionRepository));
+        result.setExecutivePositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"Executive",start,end,positionRepository));
+        result.setEngineeringPositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"Engineering",start,end,positionRepository));
+        for(Company c : companies){
+            if(c.getTotalPositions() > result.getTotalPositions()){result.setTotalPositions(c.getTotalPositions());}
+            if(c.getTempPositions() > result.getTempPositions()){result.setTempPositions(c.getTempPositions());}
+            if(c.getPermanentPositions() > result.getPermanentPositions()){result.setPermanentPositions(c.getPermanentPositions());}
+            if(c.getRelevantPositions() > result.getRelevantPositions()){result.setRelevantPositions(c.getRelevantPositions());}
+            if(c.getRelevantTempPositions() > result.getRelevantTempPositions()){result.setRelevantTempPositions(c.getRelevantTempPositions());}
+            if(c.getRelevantPermanentPositions() > result.getRelevantPermanentPositions()){result.setRelevantPermanentPositions(c.getRelevantPermanentPositions());}
+        }
         result.setCompanyName(companyName);
         result.setMonth(month.getMonth().name());
         return result;

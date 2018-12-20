@@ -10,7 +10,7 @@ public class PeakInfo {
     private int relevantPositions;
     private int relevantTempPositions;
     private int relevantPermanentPositions;
-    private int ITPositions;
+    private int itPositions;
     private int financePositions;
     private int executivePositions;
     private int engineeringPositions;
@@ -79,12 +79,12 @@ public class PeakInfo {
         this.relevantPermanentPositions = relevantPermanentPositions;
     }
 
-    public int getITPositions() {
-        return ITPositions;
+    public int getItPositions() {
+        return itPositions;
     }
 
-    public void setITPositions(int ITPositions) {
-        this.ITPositions = ITPositions;
+    public void setItPositions(int itPositions) {
+        this.itPositions = itPositions;
     }
 
     public int getFinancePositions() {
