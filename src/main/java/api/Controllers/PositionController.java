@@ -2,6 +2,7 @@ package api.Controllers;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import api.Pojos.*;
 
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
@@ -604,5 +606,25 @@ public class PositionController {
         }
 
         return returnString;
+    }
+
+    //SIMPLE, UNMAPPED UTILITY METHODS
+    public static Integer getPeakByCompanyAndFieldAndPeriod(String companyName, String field, LocalDate start, LocalDate end, PositionRepository positionRepository){
+        LocalDate date = start;
+        int peak = 0;
+        //Loop through the month:
+        while(date.isBefore(end) || date.isAfter(start) || date.isEqual(start) || date.isEqual(end)){
+            int sum = 0;
+            List<Integer> numList = positionRepository.countByFieldAndCompanyNameAndDate(field,companyName,date);
+            for(Integer i : numList){
+                sum += i;
+            }
+            if(sum>peak){
+                peak = sum;
+            }
+            date = date.plusDays(1);
+        }
+
+        return peak;
     }
 }

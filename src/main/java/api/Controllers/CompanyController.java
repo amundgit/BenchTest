@@ -31,6 +31,9 @@ public class CompanyController {
     @Autowired
     DateRepository dateRepository;
 
+    @Autowired
+    PositionRepository positionRepository;
+
     /**
      * Simple method to get all stored companies as JSON objects. Accessed by get call.
      * @return      List of all stored companies as JSON objects
@@ -134,6 +137,26 @@ public class CompanyController {
                 result = i;
             }
         }
+        return result;
+    }
+
+    /**
+     * Method to get peak numbers for all values for a given company in a given month
+     * @param searchDate    String containing search date, format YYYY-MM
+     * @param companyName   String containing  company name
+     * @return              Highest number of relevant positions as integer
+     */
+    @GetMapping(path = "/getallpeaksbymonthandcompany")
+    @ApiOperation(value = "Get the largest number of relevant positions in given month, for given company", notes = "Date should be given as YYYY-MM, company name plain string")
+    public @ResponseBody PeakInfo getAllPeaksByMonthAndCompany(@RequestParam(name = "searchDate")String searchDate, @RequestParam(name = "companyName")String companyName){
+        PeakInfo result = new PeakInfo();
+        YearMonth month = YearMonth.parse(searchDate);
+        LocalDate start = month.atDay(1);
+        LocalDate end = month.atEndOfMonth();
+        List<Company> companies = companyRepository.getByCompanyAndPeriod(companyName,start,end);
+        result.setITPositions(PositionController.getPeakByCompanyAndFieldAndPeriod(companyName,"IT",start,end,positionRepository));
+        result.setCompanyName(companyName);
+        result.setMonth(month.getMonth().name());
         return result;
     }
 
