@@ -162,8 +162,8 @@ public class CompanyController {
      * @param companyName   String containing  company name
      * @return              List of PeakInfo objects containing all monthly peaks in the period
      */
-    @GetMapping(path = "/getallpeaksbymonthandcompany")
-    @ApiOperation(value = "Get the largest number of relevant positions in given month, for given company", notes = "Date should be given as YYYY-MM, company name plain string")
+    @GetMapping(path = "/getallpeaksbycompanyandperiod")
+    @ApiOperation(value = "Get a list of all peak numbers for all values for a given company, in a given period", notes = "Dates should be given as YYYY-MM-DD, company name plain string")
     public @ResponseBody Iterable<PeakInfo> getAllPeaksByCompanyAndPeriod(@RequestParam(name = "startDate")String startDate, @RequestParam(name = "endDate")String endDate, @RequestParam(name = "companyName")String companyName){
         List<PeakInfo> resultList = new ArrayList<>();
         LocalDate start = LocalDate.parse(startDate);
