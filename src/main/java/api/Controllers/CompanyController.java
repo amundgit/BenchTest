@@ -144,15 +144,39 @@ public class CompanyController {
      * Method to get peak numbers for all values for a given company in a given month
      * @param searchDate    String containing search date, format YYYY-MM
      * @param companyName   String containing  company name
-     * @return              Highest number of relevant positions as integer
+     * @return              PeakInfo object containing all monthly peaks
      */
-    @GetMapping(path = "/getallpeaksbymonthandcompany")
+    @GetMapping(path = "/getallpeaksbycompanyandmonth")
     @ApiOperation(value = "Get the largest number of relevant positions in given month, for given company", notes = "Date should be given as YYYY-MM, company name plain string")
-    public @ResponseBody PeakInfo getAllPeaksByMonthAndCompany(@RequestParam(name = "searchDate")String searchDate, @RequestParam(name = "companyName")String companyName){
+    public @ResponseBody PeakInfo getAllPeaksByCompanyAndMonth(@RequestParam(name = "searchDate")String searchDate, @RequestParam(name = "companyName")String companyName){
         YearMonth month = YearMonth.parse(searchDate);
         LocalDate start = month.atDay(1);
         LocalDate end = month.atEndOfMonth();
         return getPeaksByCompanyAndPeriod(companyName,start,end);
+    }
+
+    /**
+     * Method to get a list of all peak numbers for all values for a given company, in a given period
+     * @param startDate     String containing start date of period, format YYYY-MM-DD
+     * @param endDate       String containing end date of period, format YYYY-MM-DD
+     * @param companyName   String containing  company name
+     * @return              List of PeakInfo objects containing all monthly peaks in the period
+     */
+    @GetMapping(path = "/getallpeaksbymonthandcompany")
+    @ApiOperation(value = "Get the largest number of relevant positions in given month, for given company", notes = "Date should be given as YYYY-MM, company name plain string")
+    public @ResponseBody Iterable<PeakInfo> getAllPeaksByCompanyAndPeriod(@RequestParam(name = "startDate")String startDate, @RequestParam(name = "endDate")String endDate, @RequestParam(name = "companyName")String companyName){
+        List<PeakInfo> resultList = new ArrayList<>();
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        LocalDate tempEnd = start.withDayOfMonth(start.lengthOfMonth());
+        while(tempEnd.isBefore(end)){
+            resultList.add(getPeaksByCompanyAndPeriod(companyName,start,tempEnd));
+            start = start.withDayOfMonth(1);
+            start = start.plusMonths(1);
+            tempEnd = start.withDayOfMonth(start.lengthOfMonth());
+        }
+        resultList.add(getPeaksByCompanyAndPeriod(companyName,start,end));
+        return resultList;
     }
 
     /**
